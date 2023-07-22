@@ -155,3 +155,60 @@ Criando um novo projeto
 [17:53] Vou rodar novamente só para você ver que está funcionando da mesma forma, vou clicar em "Play".
 
 [17:58] Nós temos aqui a nossa primeira lista de viagens!
+
+@@03
+Para saber mais: Ferramentas de design
+
+Iniciamos um novo projeto chamado Alura Viagens e começamos a desenvolver a primeira tela do aplicativo. No nosso caso, estamos copiando um layout pronto no qual são passadas todas as especificações, como cor, tamanho, fonte etc.
+Se você já trabalha em uma empresa de desenvolvimento, provavelmente atua junto a uma equipe de design. Há diversas ferramentas, como Zeplin, Figma, entre outros, que nos auxiliam no entendimento do projeto, com base em prototipagem e especificações da funcionalidade.
+
+No nosso projeto já temos todas as especificações e, à medida que o projeto for avançando, vamos implementar mais funcionalidades ao projeto.
+
+@@04
+Implementando UITableView
+
+Durante a aula, acompanhamos a implementação de um componente chamado UITableView, muito utilizado na listagem de objetos, para montar a tela do aplicativo de acordo com o nosso projeto.
+Por que precisamos implementar o protocolo UITableViewDataSource na classe ViewController?
+
+@@Porque precisamos customizar a célula que será exibida na TableView.
+ 
+Alternativa correta
+Implementamos esse protocolo para acessar comportamentos, por exemplo o clique em cima de um item da lista.
+ 
+Alternativa correta
+Porque obrigatoriamente precisamos implementar pelo menos dois métodos para a TableView funcionar.
+ 
+Alternativa correta! Há vários métodos que nos auxiliam na criação e comportamento de uma TableView. Porém, dois são obrigatórios: um onde configuramos o número de linhas e o outro onde criamos uma célula para ser exibida.
+
+05
+Faça como eu fiz: Entendendo protocolos
+
+Durante o desenvolvimento do nosso projeto, teremos de lidar com protocol, que é uma estrutura muito utilizada em Swift. Um protocolo pode ser definido basicamente por um conjunto de métodos ou propriedades.
+De que maneira o protocolo é importante no nosso projeto?
+
+No momento que implementamos a UITableView, obrigatoriamente precisamos implementar o protocolo UITableViewDataSource, que nos habilita a utilizar 2 métodos:
+func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return secaoDeViagens?[section].numeroDeLinhas ?? 0
+}COPIAR CÓDIGO
+func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let celulaViagem = tableView.dequeueReusableCell(withIdentifier: "ViagemTableViewCell") as? ViagemTableViewCell else {
+            fatalError("error to create ViagemTableViewCell")
+        }
+
+        return celulaViagem
+}COPIAR CÓDIGO
+Onde:
+
+numberOfRows: Número de linhas que a tabela terá.
+cellForRow: Criação da célula que a tabela terá.
+
+@@06
+O que aprendemos?
+
+Nesta aula, aprendemos:
+Implementação da UITableView
+A TableView é um componente muito utilizado e também muito poderoso para se trabalhar com a listagem de elementos. Nesta aula, implementamos apenas alguns métodos de vários disponíveis nos protocolos de UITableViewDelegate e UITableViewDataSource.
+
+Conseguimos controlar vários estados e eventos, por exemplo, clique em um item da TableView, seleção de múltiplas linhas, drag and drop e muito mais.
+
+https://github.com/alura-cursos/alura-viagens-constraints/archive/cdc6fee05e89f5b1dd09fb7a22dcdd27d7e05b57.zip
