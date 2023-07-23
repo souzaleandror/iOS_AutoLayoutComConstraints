@@ -464,7 +464,6 @@ Estilizando os elementos do header
 
 @@07
 Faça como eu fiz: Configurando o header
-PRÓXIMA ATIVIDADE
 
 Nesta aula, aprendemos a configurar o header da TableView através do protocolo UITableViewDelegate. Esse protocolo fornece uma série de métodos para diversos eventos que veremos mais adiante, entre eles alguns métodos que nos permite configurar o header corretamente.
 
@@ -487,3 +486,355 @@ O que aprendemos?
 Nesta aula, aprendemos:
 Cabeçalho da TableView
 Adicionamos uma View customizada como cabeçalho (header) da TableView. É um recurso muito utilizado em diversos apps, pois, além de ser um espaço para colocar a logomarca do app/produto, também podemos adicionar funcionalidades, como uma busca para filtrar as viagens rapidamente.
+
+@03-Cabeçalho do aplicativo #2
+
+@@01
+Projeto da aula anterior
+
+Se você deseja começar o curso a partir desta aula, pode fazer o download do projeto desenvolvido até o momento.
+
+https://github.com/alura-cursos/alura-viagens-constraints/archive/ff264749e1df38905902e507e9c13e48a5bc41c6.zip
+
+@@02
+Iniciando com as constraints
+
+[00:00] Continuando, nós acabamos de fazer algumas alterações no header - como, por exemplo, nós criamos os outlets para alguns elementos; como a label de título, o header e o banner.
+[00:14] Criamos também o método configuraView onde estamos setando uma cor de fundo para o header, que é a cor azul escuro que nós utilizamos no header. E nós estamos chamando esse método no ViewController no método viewForHeaderInSection.
+
+[00:34] Ou seja, no método onde nós instanciamos o header para ser exibido na TableView. Aqui nós temos a linha onde nós instanciamos. E embaixo chamamos esse método.
+
+[00:47] Eu vou rodar o projeto para testarmos e vermos como ele está ficando... E aqui temos alguns detalhes para vermos. A barra superior continua com a faixa branca. Vamos voltar no “Main.storyboard” e vamos voltar o tamanho da “Viagens Table View” até a área segura. Repare que ele tem algumas linhas que nos auxiliam a encontrarmos esse espaçamento.
+
+[01:18] Cliquei e arrastei até esse ponto. Eu vou rodar o app de novo. Nós vamos verificar essa alteração.
+
+[01:29] O outro ponto que eu queria comentar é o seguinte: nós temos esse banner com uma view na parte esquerda e uma imagem que ainda não setamos nenhum valor, ou seja, por isso que está branco na parte da direita.
+
+[01:45] Mas o que é importante notarmos é que na margem lateral esquerda temos um espaçamento e na margem lateral direita nós não temos. Só que se voltarmos na view, no XIB do header, repare que aqui nós temos a margem tanto na lateral esquerda quanto na lateral direita. Vamos em “HomeTableViewHeader.xib".
+
+[02:06] Por que ele não está respeitando essas margens? O primeiro ponto é o seguinte: nós estamos rodando o projeto, nós estamos testando nosso projeto no iPhone 8. Se formos perceber, aqui embaixo nós estamos desenhando a view na visualização do iPhone 11.
+
+[02:28] Ou seja, eles possuem tamanhos diferentes, é por isso que às vezes o tamanho que você desenha não vai refletir em algum simulador que você por acaso vier a testar.
+
+[02:43] Quer dizer que eu tenho que desenhar uma view para cada tamanho de iPhone? Na verdade, não. Ainda bem que não! Esse é o ponto principal do curso que nós vamos começar a comentar agora: o auto layout.
+
+[02:58] Com o auto layout, como o próprio nome já sugere, nós conseguimos setar algumas configurações nas views para que ela se redimensione automaticamente, ou seja, vamos construir um único layout para que ele funcione em todos os tamanhos de iPhones.
+
+[03:19] O que precisamos começar a entender? Tem algumas formas de trabalharmos com auto layout no iOS. Nesse caso, nós estamos falando do framework UIKit, e uma delas se chama constraint - é essa técnica que nós vamos explorar ao decorrer desse curso.
+
+[03:39] O que é uma constraint? Uma constraint nada mais é do que uma regra que adicionamos em uma view para que ela entenda de que forma ela deve se comportar. Como eu adiciono essas regras? Como eu adiciono uma constraint em uma *view?
+
+[03:58] Vamos começar a engatinhar nesse tema e você vai ver que não é difícil. Nós temos que ter alguns cuidados que eu vou comentando com vocês ao decorrer do curso.
+
+[04:10] Primeiro: eu quero configurar a minha view azul, essa view do header, para que ela se estique nas laterais independentemente do tamanho do iPhone - se ele for pequeno ou grande, ela vai se esticar.
+
+[04:24] Ou seja, eu preciso prender essa view na margem lateral esquerda e na margem lateral direita, para que ela se redimensione não importando o tamanho que seja o dispositivo. Vamos começar a trabalhar nesse sentido!
+
+[04:44] Vou selecionar a view. O primeiro passo para se trabalhar com uma constraint é selecionar o elemento que você quer adicionar essa constraint, ou seja, o elemento que você quer adicionar essa regra de auto layout.
+
+[04:59] Pronto, já selecionei! O que eu preciso fazer agora? Eu preciso entender onde fica o painel de pin, ou seja, onde é o painel onde eu consigo pinar minha view aos lados que eu quero que ela se estique.
+
+[05:13] Esse painel fica na parte inferior do Xcode. Nós vamos utilizar esse ícone de adicionar novas constraints, “Add New Constraints”. Quando eu clico em cima desse botão ele abre um menu parecido com esse.
+
+[05:32] O que eu quero fazer? Eu quero começar prendendo minha view ao topo, então eu clico na parte superior do ícone, onde eu indico que estou prendendo minha view ao topo. Quando eu deixo ele selecionado, ele fica com esse vermelho mais escuro; quando eu clico de volta, eu tiro a seleção e não estou fazendo nada.
+
+[05:52] Eu quero pinar minha view ao topo. Clico no ícone. Por enquanto nós não vamos explorar as outras opções. Eu clico no botão de adicionar constraint, “Add 1 Constraint”.
+
+[06:03] Cliquei no botão. A primeira coisa que temos que entender é que quando colocamos uma constraint e ele fica com as linhas laterais vermelhas, significa que possuímos pelo menos um ou mais problemas com as constraints.
+
+[06:24] Veremos aos poucos como fazemos para resolver esses problemas. O que eu preciso entender? Que eu acabei de pinar minha view acima. Agora eu quero pinar minha view na lateral esquerda e na lateral direita. Vamos continuar colocando outras funções.
+
+[06:43] Agora que eu já sei onde é o painel das constraints, eu vou clicar em “Add New Constraints” e vou colocar uma constraint na margem lateral esquerda e na margem lateral direita.
+
+[06:54] Coloquei as constraints e agora clico em "Add 1 constraint"... A minha view ainda continua com erros de constraint! Agora vamos entender como analisamos esses erros. Como eu faço? Nesse menu da lateral esquerda, na view que eu estou mexendo, a “Home Table View Header”, tem esse botão vermelho.
+
+[07:21] Eu vou clicar nele. Esse botão indica que a view possui erros com as constraints. Eu clico nele e ele me fala qual é o erro. Ele falou que precisa de constraints para altura, ou seja, eu preciso adicionar constraints para altura.
+
+[07:41] Quando eu adiciono uma view no meu plano de desenho das views, do storyboard, eu preciso, na verdade, satisfazer algumas regras - e quais são essas regras? Abri o Sublime Text. Basicamente, eu preciso indicar qual é o eixo y.
+
+[08:03] Eu tenho o eixo “X” e o eixo “Y”, o eixo “Y” na vertical e o eixo “X” na horizontal. Eu preciso indicar nesse plano onde essa view vai ficar. “INDICAR QUAL É O EIXO Y”, na próxima linha "INDICAR QUAL É O EIXO X", depois "CONFIGURAR ALTURA” e “CONFIGURA LARGURA".
+
+[08:23] Basicamente, precisamos sempre satisfazer essas condições, indicar qual é o eixo “Y” e o eixo “X”, configurar a altura e a largura. Quando colocamos a view pinada acima, nós já estamos dizendo qual é o eixo “Y”.
+
+[08:45] Quando eu prendo a view, tanto na lateral esquerda quanto na lateral direita, eu já estou dizendo qual é a largura. Não estou dizendo o tamanho fixo da largura, mas se eu prendo ela ao lado esquerdo e prendo ao lado direito, ele já sabe calcular a largura.
+
+[09:05] Agora eu só preciso indicar qual é a altura! Eu vou abrir novamente o painel das constraints, clicando em "Add New Constraints". Repare que aqui eu posso setar uma largura fixa.
+
+[09:16] Nesse caso, não precisamos porque já pinou o lado esquerdo, o lado direito; mas eu preciso indicar qual é a altura marcando a opção “Height". A altura é 250 mesmo, então eu clico em "Add 1 constraint".
+
+[09:30] E olhe que bacana, quando eu faço isso a minha view já não possui nenhum erro de constraint! Ou seja, todas as condições que nós comentamos estão certas, nós conseguimos configurar e nos enquadrarmos nessas regras de constraint.
+
+[09:54] Demos o primeiro passo para entendermos como as constraints funcionam e acabamos de comentar que podemos pinar a view para que ocupe o espaço disponível. Ainda falta configurarmos constraints para os outros elementos - que é o que faremos a seguir!
+
+@@03
+Configurando constraints
+
+[00:00] Nós acabamos de adicionar constraints na view do header e agora continuaremos adicionando outras constraints para resolvermos o problema do banner.
+[00:13] Nós temos a parte lateral esquerda onde temos o espaçamento, esse espaçamento não está sendo respeitado na margem lateral direita. O que vamos fazer? Nós precisamos adicionar constraints no banner. Eu vou começar selecionando o banner, ele ainda não tem constraints.
+
+[00:35] Aliás, como eu sei se uma view tem constraint ou não? É muito simples! Eu vou pegar como exemplo a view que nós acabamos de mexer, a view do header que tem constraints.
+
+[00:47] Mas como eu sei? Quando eu seleciono a view, tem duas formas. Uma é percebendo se essa view possui algumas linhas ou guias. Eu vou dar um zoom para facilitar a visualização.
+
+[01:00] Repare que quando eu passo o cursor do mouse, ele aponta algumas linhas que mostram que essa view possui constraints. Essa é uma forma.
+
+[01:12] Como a view está com a cor azul igual a linha das constraints, fica um pouco difícil de visualizar, mas tem uma forma que não falha. É através do menu “Show the Size Inspector” no menu lateral direito.
+
+[01:26] Eu vou selecionar a view mais uma vez... Selecionei. Se eu clico na opção “Show the Size Inspector”, ele automaticamente abre um menu de constraints, se tiver constraints. Nesse caso, tem. Ele indica quais são as constraints que essa view possui.
+
+[01:45] Isso que é legal porque você consegue ver claramente quais são as constraints que foram aplicadas. Olhe só, tem uma constraint na margem lateral esquerda, uma constraint na margem lateral direita, uma constraint ao topo e uma constraint de altura.
+
+[02:04] Se eu clicar na constraint de altura, ele vai falar qual é a constraint de altura. Se eu clico na constraint acima, ele mostra que é a constraint de topo. Essa é uma forma rápida e simples de verificar se uma view possui constraints ou não.
+
+[02:22] Agora que nós já sabemos, vamos voltar para o banner. Eu cliquei no banner no menu esquerdo. Repare que aqui no menu “Show the Size Inspector” ele não mostra nada relacionado às constraints, ou seja, essa view ainda não possui.
+
+[02:37] Utilizaremos basicamente a mesma lógica que utilizamos na view do header, que é pinar a view ao lado esquerdo e ao lado direito. Só que ao invés de pinarmos a view acima, pinaremos a view na parte debaixo do header. Esse é um conceito muito importante para começarmos a entender.
+
+[03:02] Sempre que pinamos a nossa view, ou seja, sempre adicionamos constraints a alguma view em relação a alguma outra coisa, nós estamos colocando uma constraint em relação ao header.
+
+[03:19] Vamos prendendo e amarrando as coisas. Tem pontos positivos e tem pontos negativos, vamos entender isso aos poucos. Eu vou começar selecionando o banner. É importante começarmos de fato a colocar as constraints, termos certeza qual view estamos selecionando.
+
+[03:42] Por exemplo: se sem querer eu clico no meio e acho que estou selecionando a view do banner. Na verdade, eu não estou; eu estou selecionando a view lateral esquerda do banner. Se eu clico do outro lado, eu estou selecionando a imagem.
+
+[03:57] Repare que clicando é difícil de encontrar a view do banner. É por isso que, muitas vezes, é mais interessante você utilizar o menu lateral esquerdo, onde você consegue selecionar de fato diretamente a view que você quer.
+
+[04:12] Por isso, é importante nós colocarmos nomes que nos indique de fato qual componente estamos trabalhando. É uma boa prática mantermos tudo nomeado porque à medida que o projeto vai crescendo vai ficando difícil de encontrar os elementos.
+
+[04:31] O que eu quis dizer com isso? Que às vezes é mais fácil você selecionar com o mouse e às vezes é mais fácil você selecionar as coisas no menu lateral esquerdo. Nesse caso, eu selecionei através do menu.
+
+[04:45] Nós começaremos adicionando algumas constraints. Tem duas formas de adicionar constraints através da interface builder. A primeira já aprendemos no vídeo anterior, que é com o menu das constraints. Eu clico no ícone do menu das constraints no lado inferior direito.
+
+[05:00] Eu clico e consigo de fato saber onde eu quero colocar as constraints - no lado esquerdo, no lado direito, abaixo ou acima. É uma das formas.
+
+[05:12] A outra forma é com o ponteiro do mouse; só que para utilizar essa forma, eu preciso selecionar a view, eu preciso pressionar a tecla “Ctrl” do teclado.
+
+[05:28] Repare bem, a tecla “Ctrl”, não é a tecla “Command”. No Mac temos duas teclas semelhantes, mas temos que pressionar a tecla “Ctrl”. Pressionei a tecla “Ctrl” e eu vou adicionar constraints em relação a essa view do header. Olhe só o que eu vou fazer. Clico e pressiono, clico naview e arrasto para o lado esquerdo.
+
+[05:57] Repare que ele me diz na parte lateral direita o nome da view, “HomeTableViewHeader”, ou seja, é nessa view mesmo que eu quero adicionar as constraints. Ele abre um menu com várias opções.
+
+[06:11] Eu tenho aqui diversas opções de constraints. Nós vamos tentar entender o que é cada uma. “Leading Space to Safe Area”, “Bottom Space to Safe Area”, “Trailing Space to Safe Area” e “Top Space to Safe Area”. Por enquanto nós vamos analisar essas quatro opções.
+
+[06:27] O que quer dizer “Leading Space to Safe Area”? Aqui, quando vamos adicionar constraints e trabalhar com auto layout, é muito comum vermos essas duas palavras, leading e trailing.
+
+[06:40] Traduzindo leading, para entendermos de uma forma mais fácil, é a margem lateral esquerda. Sempre que você ver essa palavra, leading, significa “margem lateral esquerda”. Sempre que você ver essa palavra trailing saiba que é a margem lateral direita. Leading é esquerda e trailing é direita.
+
+[07:04] Nesse caso, queremos pinar - ou seja, adicionar constraints - na margem lateral esquerda. Eu vou clicar em "Leading Space to Safe Area". A mesma coisa com o outro lado. Eu seguro a tecla “Ctrl” e arrasto para a parte branca na direita.
+
+[07:22] A parte branca é onde estamos selecionando header todo, não é a parte azul. Agora vamos adicionar constraints na margem lateral direita, por isso escolheremos clicar em "Trailing Space to Safe Area".
+
+[07:38] Ainda possui alguns erros de constraints. Nós vamos clicar na bola vermelha no menu da esquerda para analisarmos quais são esses erros.
+
+[07:47] Ele fala que a view precisa da posição “Y”. Lembra que temos o eixo “X” e o eixo “Y”? Prendemos as duas views na margem lateral esquerda, leading, e na margem lateral direita é trailing.
+
+[08:04] Agora vamos prender essa view em relação à view do header, a view azul. O que vamos fazer? Eu selecionei mais uma vez a view do banner. Vou segurar a tecla “Ctrl” e vou arrastar, dessa vez naview azul, para a header view - não é na parte branca, é na parte azul.
+
+[08:34] Soltei e ele abriu várias opções novamente. Como eu quero prender na parte debaixo dessa view azul, eu vou escolher a opção “Bottom”.
+
+[08:49] E eu ainda tenho erro de constraint! Agora eu preciso adicionar a altura, vou no botão de bolinha vermelha na frente de “Home Table View Header” no menu da lateral esquerda.
+
+[08:57] Eu vou selecionar a view do banner e vou setar uma altura. Vou abrir o painel de constraints e vou selecionar a altura. Clico em “Height > Add 1 constraint".
+
+[09:12] E está tudo azul, estão com as constraints funcionando. Muito legal! Uma coisa que percebemos aqui é que a view ficou acima do que estava, ou seja, quando nós setamos a constraint na parte debaixo, grudamos o nosso banner na parte debaixo da view azul.
+
+[09:36] Só que, na verdade, não queremos que ele fique exatamente no mesmo nível, queremos que ele fique um pouco mais abaixo, como estava. O que eu vou fazer? Eu vou selecionar o banner e vou editar uma constraint.
+
+[09:51] É muito importante sabermos adicionar uma constraint, apagar e editar. Selecionei o banner e agora com o menu “Show the Size Inspector” selecionado, eu vou descer um pouco e vou verificar quais constraints foram aplicadas.
+
+[10:16] Margem lateral esquerda, margem lateral direita, parte inferior e a altura. Essas foram as constraints. Eu quero editar a constraint inferior, eu quero que ela fique um pouco mais para baixo. Eu seleciono a constraint e dou dois cliques no ícone "Align Bottom to: Header View".
+
+[10:36] Cliquei duas vezes e ele vai me levar para outro menu. Qual é o campo em que eu edito o valor da constraint? É o campo chamado “Constant”. A constraint está com um valor 0, mas eu posso alterar esse valor.
+
+[10:56] Eu vou posicionar a view ao lado para nós conseguirmos visualizar rapidamente o que está acontecendo. Se eu colocar um valor negativo, ele vai subir mais. Eu vou colocar -10, por exemplo... Ele ficou mais para cima. Olhe a constraint indicando.
+
+[11:11] Nessa constraint temos um valor de -10. Se -10 vai mais para cima e eu quero que ele vá mais para baixo, eu vou colocar 10. Quando eu coloco 10 ele fica da forma que estava antes, um pouco mais para baixo. Na hora em que formos arredondar a view você vai ver que ele vai dar aquele efeito bem legal de sobreposição.
+
+[11:45] Já conseguimos adicionar as constraints no banner. Está tudo azul, não temos nenhum erro de constraints. Vamos fazer o build o projeto de novo para vermos se resolvemos o nosso problema.
+
+[11:59] Olhe só, que legal! Fizemos o build e não vimos diferença nenhuma! Acalma-se, que vamos resolver o problema agora. O que acontece? Adicionamos constraints no nosso header, porém a TableView que temos no nosso ViewController não sabe onde começa, onde termina e aonde ela vai se posicionar em relação ao layout.
+
+[12:20] Por isso não está funcionando. A ideia é prender a TableView a margem esquerda, a margem direita, no topo e na margem inferior. O que eu vou fazer? Vou selecionar a TableView. Venho no menu inferior, onde adicionamos as constraints e vou prender ela com o valor 0, ou seja, sem nenhum espaçamento em todas as margens.
+
+[12:49] Depois que eu selecionei todas essas opções, vou clicar em "Add 3 constraints". Ele me mostra que eu prendi em todas as margens. Vou rodar o projeto mais uma vez.
+
+[13:04] E agora, sim, temos o header com as constraints - ou seja, eu tenho a margem direita, que não estava funcionando, e a margem esquerda. Aos poucos nós vamos aplicando as constraints e vendo como o auto layout pode nos ajudar a resolver esse tipo de problema.
+
+[13:25] Coloquei uma constraint errada. Como eu faço para apagar? Eu vou voltar na view do header. Se você já adicionou as constraints corretamente no seu banner, não precisa fazer isso.
+
+[13:40] No meu caso, eu vou fazer só para mostrar como eu apago uma constraint. É muito simples, eu seleciono a view que quero apagar a constraint e vejo qual constraint eu coloquei.
+
+[13:53] De repente, eu coloquei uma constraint de altura incorreta. Eu seleciono essa constraint e aperto a tecla “Delete”. Cliquei e apaguei a constraint. Como eu apaguei, ele está reportando algum erro.
+
+[14:09] Ou eu posso colocar de novo, ou eu posso apertar as teclas "Command + Z". Vou colocar aqui mais uma vez através do menu, clico em "Height > Add 1 constraint"... Ficou tudo azul e está funcionando.
+
+[14:24] Vamos rodar o projeto de novo! Como você pode ver, quanto mais praticamos, mais conseguimos desenvolver essa habilidade de percepção do que está dando errado, do que eu fiz que adicionou uma constraint que não era para adicionar.
+
+[14:41] Tudo isso é prática. Nós vamos, gradualmente, dando alguns passos até que entendamos de fato como esse mecanismo de auto layout com constraints funciona.
+
+[14:53] Nos próximos vídeos nós continuaremos praticando para ficarmos com uma habilidade melhor de percepção para resolvermos esses problemas que o auto layout nos ajuda.
+
+@@04
+Regra de aplicação de constraint
+
+Uma das técnicas de auto layout, quando trabalhamos com o UIKit, se chama constraints. Através dela conseguimos configurar regras para determinados elementos, dizendo como devem se comportar.
+De acordo com o que estudamos na aula, quais condições devemos satisfazer para estar em conformidade com as regras das constraints?
+
+Configurar 'eixo x', 'eixo y', altura e largura.
+ 
+Alternativa correta! Via de regra, é necessário configurar a posição x e y, altura e largura. Altura e largura não precisam necessariamente ser valores fixos. Podemos, por exemplo, estabelecer a margem esquerda e direita que automaticamente o auto layout vai entender que a largura pode ser dinâmica.
+Alternativa correta
+Configurar o 'eixo x' e 'eixo y'.
+ 
+Alternativa correta
+Configurar a altura e largura.
+
+@@05
+Adicionando constraint no banner
+
+[00:00] Acabamos de colocar a constraint no banner, em toda essa view, colocamos a constraint lateral esquerda, direita, abaixo e da altura. Porém, os elementos de dentro, que é essa view na margem esquerda, e a imagem ainda não possuem constraints.
+[00:19] A ideia desse vídeo é colocarmos as constraints nesses dois elementos e também vermos alguns cuidados que temos que ter com algumas constraints específicas.
+
+[00:33] Como já aprendemos, temos duas formas práticas de colocarmos constraints: uma é segurando a tecla “Ctrl” e arrastando para onde eu quero pinar; a outra é através do menu inferior. Dependendo do caso, você pode escolher uma forma ou outra.
+
+[00:52] Nesse caso, como eu estou selecionando a view à esquerda e eu quero pinar ela acima, abaixo e a esquerda, como eu não consigo visualizar a view que está abaixo dela para poder pinar, é mais fácil utilizar o menu inferior.
+
+[01:10] Se a view por acaso tiver ficado com uma borda, você não precisa fazer. Eu estou fazendo isso somente para mostrar para você. Puxei a view para baixo e para a direita.
+
+[01:20] Se a view estivesse assim, ficaria mais fácil; porque eu seguraria a tecla “Ctrl” e conseguiria arrastar para a view utilizando o mouse a tecla “Ctrl” ou o trackpad do Mac.
+
+[01:34] Clicando e arrastando eu conseguiria facilmente pinar em direção à view que eu quero. Como ela ocupa todo o espaço, eu não tenho como visualizar onde ela está.
+
+[01:49] Nesse caso, é mais fácil utilizar o menu inferior para conseguir pinar minha view. Dependendo do caso, você utiliza ou o cursor do mouse com a tecla “Ctrl” pressionada, ou o menu de constraints na parte inferior da tela.
+
+[02:05] Como eu coloco uma constraint? Clico na view, na label ou em qualquer elemento que herda de UIView e em seguida abro o menu das constraints.
+
+[02:19] Eu vou começar pinando a minha view na margem inferior. Ele está com um valor de 2, mas, na verdade, deveria ser 0. Na margem esquerda também, 0. E ao topo, 0.
+
+[02:35] Ou seja, ele vai ficar bem colado abaixo, a esquerda e acima. Uma coisa importante é a seguinte: ou podemos mostrar qual é a altura para a view explicitamente. Se eu quisesse setar uma altura, não precisaria preencher a margem em cima e abaixo, estaria falando qual é a altura explicita dessa view.
+
+[03:07] Ou você pode pinar a view acima e abaixo. Prendendo a view acima e abaixo ele consegue calcular a altura automaticamente. Eu não preciso dizer explicitamente qual é a altura porque implicitamente ele vai saber calcular a atura dessa view.
+
+[03:26] Nas regras da constraints, como conversamos nos vídeos anteriores, precisamos indicar o eixo “Y”, o eixo “X”, a altura e a largura. Nem sempre precisaremos explicitamente falar qual é a largura e a altura porque, nesse caso, como eu estou prendendo ao topo e abaixo, ele mesmo calcula a altura.
+
+[03:46] Ou eu pino, ou eu mostro a altura explicitamente; depende do caso. Nós veremos quais cuidados temos que ter ao deixarmos altura e largura fixas daqui a pouco.
+
+[04:02] Recapitulando, prendemos acima, a esquerda e abaixo. Agora eu vou clicar em "Add 3 Constraints". Estamos adicionando regras na nossa view para que ela saiba como se comportar quando o layout se esticar ou diminuir.
+
+[04:20] Temos problemas. Como eu sei que nós temos problemas? Porque ele está indicando linhas vermelhas. Sempre que você clicar em uma view e tiver linhas vermelhas, significa que essa view tem problema com as constraints.
+
+[04:39] É até uma dica: se você for fazer uma entrevista de emprego e precisar fazer um teste, tem que tomar muito cuidado para você não entregar o seu projeto prático com problemas nas constraints. Uma das coisas que a galera analisa é se o candidato tem esse conhecimento com auto layout.
+
+[05:03] Você precisa entender direito como aplica o auto layout e sempre deixar as constraints aplicadas corretamente. Eu tenho problemas com as constraints. Na verdade, ele vai pedir para setar um valor de largura. Como eu sei que é largura? Porque ele me diz que precisa de constraints para a largura.
+
+[05:25] O que faremos para solucionar? Vamos clicar na view e vamos aplicar constraints para largura. Eu venho no menu inferior e adiciono uma constraint para largura. Clico em "Add 1 constraint".
+
+[05:42] Repare que no começo você vai adicionando constraint, vai vendo qual mensagem a interface builder te dá, você vai acertando e de repente você precisa apagar uma constraint.
+
+[05:54] No começo é assim mesmo, até você pegar prática e entender direito como aplica. Como acabamos de colocar a constraint de largura, ele já não está mais apontando nenhum erro.
+
+[06:08] Faremos a mesma coisa com a imagem, a diferença é que vamos prender a imagem abaixo, acima e a direita. Como eu faço para adicionar constraints?
+
+[06:20] Vamos utilizar o menu inferior. Sempre que eu for adicionar uma constraint, eu preciso selecionar a view. Depois eu venho no menu inferior e adiciono, pino a view da forma que eu quiser. Eu vou prender acima, vou prender na margem direita e abaixo.
+
+[06:46] Também está com espaçamento de 2, vamos deixar 0. Ele vai reclamar com a largura, mas eu vou adicionar sem, só para nós pegarmos o costume de lermos as mensagens que o interface builder nos dá.
+
+[07:01] Adicionei a constraint, cliquei em "Add 3 constraints". A view ficou vermelha, ou seja, nós temos problemas. Vamos ver qual é o problema que essa view está tendo com as constraints! [07:14] Ele fala que precisa da posição do eixo “X”. Por que essa mensagem está um pouco diferente? Ou setamos a largura, ou indicamos qual é a posição do eixo “X”. Nesse caso, como aprendemos na margem de trailing, ou seja, na margem direita, acima e abaixo; podemos setar a largura.
+
+[07:41] Eu venho no menu inferior e seto a largura, marcando a opção “Width". Nós temos aqui as duas views com as constraints. Eu vou rodar o projeto no simulador do iPhone 8... Vamos ver como ele está, está subindo o simulador.
+
+[08:03] Parece que ele respeitou, de fato, a regra que aplicamos! Uma coisa importante é a seguinte: nós, como desenvolvedores e desenvolvedoras, temos que ter uma leitura ampla do projeto.
+
+[08:21] Temos que sempre nos perguntar: "esse layout vai funcionar para iPhone e para iPad?" Precisamos entender o todo para sabermos como configuramos o auto layout.
+
+[08:36] Por que eu falei isso? Porque a ideia desse aplicativo especificamente é ele funcionar para todas as versões de iPhone e também para iPad. Eu vou fazer o build o nosso projeto em um iPad. Olhe só, aqui em cima onde eu tenho o simulador de todos os devices disponíveis, ele está mostrando o iPhone 8.
+
+[08:58] Mas eu posso selecionar outros devices como, por exemplo, os iPads. Vou selecionar o iPad Air, por exemplo. Selecionei e vou clicar para ele gerar um build. Nós vamos ver como o nosso layout está se comportando em um iPad.
+
+[09:20] Já dá para vermos algumas coisas do auto layout que configuramos, outras nós veremos que temos problemas.
+
+[09:29] Olhe só, que bacana! Qual é o ponto positivo até agora? O ponto positivo é que essa view em que nó aplicamos as constraints, a view do banner e do header, realmente está se esticando.
+
+[09:45] Aplicamos isso em um iPhone, quando ele renderizou no iPad, ele se esticou de acordo com a largura do device. Lembra quando pinamos a view a esquerda e a direita? Na verdade, é para isso, é para ele se esticar ou diminuir de acordo com a necessidade. Isso funcionou.
+
+[10:06] O que não está tão bacana? Dentro do banner, setamos uma constraint de largura nessas views e aparentemente ele não soube bem administrar isso. Aqui não está aparecendo a imagem, mas provavelmente a imagem ficaria bem pequena também, porque deixamos a largura fixa.
+
+[10:33] Alguns minutos atrás, nesse mesmo vídeo, eu falei que veríamos alguns problemas com constraints com valores fixos, principalmente largura e altura - esse é um deles, temos aqui um problema porque setamos um valor de largura fixo.
+
+[10:49] Só que a view não tem, na verdade, uma largura fixa; ela tem que ficar larga ou menos larga de acordo com a largura da view pai.
+
+[10:59] Então nós acabaremos trabalhando um pouco com proporcionalidade. Ao invés de deixarmos um valor fixo, falaremos que a largura dessa view é tanto um valor proporcional a largura da view pai. Trabalharemos com o multiplier.
+
+@@06
+Proporcionalidade - Multiplier
+
+[00:00] Legal! O que eu quis mostrar para você aqui é: tome cuidado com larguras fixas!
+[00:05] Temos o costume, eu também faço isso, de testarmos somente no simulador e, às vezes, quando testamos em um iPhone maior ou menor, ou em um iPad, vemos que o layout não está tão legal assim.
+
+[00:21] As constraints estarem em azul não significa que o meu layout está ok para outros tamanhos. Você sempre tem que ter isso em mente, teste em outros dispositivos.
+
+[00:38] O que eu vou fazer aqui? Ao invés de deixar uma largura fixa, que é a forma que implementamos, eu vou apagar essa constraint e setar uma largura proporcional a view do banner.
+
+[00:52] Olhe só, que bacana! Como eu apago uma constraint? Eu clico na view que possui essa constraint, clico na linha da constraint que eu quero apagar e aperto o “Delete” no teclado.
+
+[01:07] Repare que ele ficou vermelho. É porque nós infringimos uma regra, mas já vamos consertar. Eu vou apertar as teclas "Command + Z" para voltar.
+
+[01:13] A outra forma de apagar é a seguinte: eu clico na view e venho no “Show the Size Inspector”, a opção da régua no canto superior direito. Logo embaixo ele me diz quais são as constraints que essa view possui.
+
+[01:37] Nesse caso, eu quero apagar a constraint de largura. Na linha abaixo das constraints eu consigo selecionar a constraint de largura e apertar a tecla "Delete". Dá na mesma. A forma que você achar mais fácil, você executa.
+
+[01:52] Como eu faço para setar uma largura proporcional view pai? É o seguinte: eu vou setar uma constraint de largura e vou falar que ela é igual a largura do banner.
+
+[02:10] Nos vídeos anteriores eu disse que era muito comum trabalharmos com constraints indicando que uma view possui alguma ligação com a outra, de largura, de altura ou pinar uma view em relação a outra. É muito comum trabalharmos dessa forma.
+
+[02:28] E esse é um exemplo prático. Eu vou falar que a view que eu tenho à esquerda está com problema de constraints, possui uma largura proporcional a view do banner. Eu vou segurar a tecla “Ctrl” e vou arrastar a view com problema para a view do banner.
+
+[02:48] Ele vai me dar algumas constraints. Repar que algumas estão com uma bola.
+
+[02:57] Significa que eu já apliquei, essas são as constraintsque já estão instaladas. O que me importa nesse momento é utilizar a opção “Equal Widths”, ou seja, essa view vai ter a largura igual a view banner. Eu vou clicar nessa opção. Repare que já fala que não tem problema nas constraints.
+
+[03:26] Eu clico na seleção ao redor da view e vejo a constraint de largura. Repare que essa linha é um pouco diferente da outra.
+
+[03:36] Ela tem esse símbolo de igualdade (=). Quando a constraint que eu utilizo o “Equal Widths”, ou “Equal Heights”, eu utilizo a constraint de igualdade e ele me mostra esse sinal.
+
+[03:55] O que é importante eu saber aqui? É importante eu entender para que serve esse sinal de igualdade. Olhe só, vou selecionar a view e vou clicar na constraint de largura.
+
+[04:07] No menu no “Show the Size Inspector”, eu tenho uma opção “Multiplier” (“multiplicador” em português), ele está em 0.5333333. Eu vou copiar esse valor, selecionando e apertando as teclas “Command + C". Eu vou começar a brincar um pouco com esse campo só para mostrar para você para que ele serve.
+
+[04:31] Por enquanto nós não sabemos muito bem o que é esse valor. Eu vou apertar as teclas “Command + C” para preservar o valor, mas ele é interessante por causa disso. Se eu quiser dizer que essa view ocupa todo o espaço, eu coloco o 1.
+
+[04:43] Se eu quiser dizer que essa view ocupa metade do espaço da view pai, 1:2 - que seria o meio. Se eu quiser dizer que essa view ocupa 1/3 do total, 1:3. Para 1/4, 1:4 e assim por diante.
+
+[05:03] Eu consigo trabalhar com esse tipo de cálculo. Se eu utilizar o 1, ele vai ocupar tudo. Como eu quero um pouco menos que 1, eu utilizo a igualdade que já havíamos configurado quando setamos a constraint, que é 0,533333. É um pouco menos que 1. Aperto a tecla "Enter".
+
+[05:28] E ele me dá essa opção de a view ocupar o espaço que queremos. Vamos ver se isso funciona de verdade? Vou rodar no iPad novamente. Faremos esse teste, olhe só que legal.
+
+[05:42] Agora ele ocupa o mesmo espaço proporcionalmente ao que era do iPhone. Falta fazermos isso para a imagem também. É o mesmo processo. Eu tenho a constraint de largura que não serve para o que precisamos, vou deletar.
+
+[06:02] O que eu vou fazer agora? Eu vou setar uma constraint de igualdade de largura. Eu seleciono a imagem, pressiono a tecla “Ctrl” e arrasto para a view que eu quero pegar como apoio, a view do banner.
+
+[06:17] E eu escolho a largura, a igualdade de largura e a opção "Equal Widths". Cliquei e solucionei a constraint. Repare que ela ficou com uma linha e o sinal de igualdade, conforme eu havia comentado com você.
+
+[06:33] Vou rodar de novo no iPad... Ele continua da forma que era para ficar mesmo. Agora vou rodar mais uma vez no iPhone 8, para ver se não quebrou o nosso layout no iPhone.
+
+[06:50] Legal, nós já conseguimos acertar a view do banner tanto no iPhone quanto no iPad! A ideia principal desse vídeo era mostrar para você como utilizamos essa opção “Multiplier”, ou seja, essa largura de igualdade para resolvermos esse tipo de problema.
+
+[07:10] E também mostrar que às vezes é meio perigoso trabalharmos com tamanho de altura ou largura fixo. É sempre bom testarmos o nosso projeto em vários simuladores para vermos se o auto layout realmente está ficando legal e está atendendo a proposta do layout que precisamos implantar.
+
+@@07
+Faça como eu fiz: Multiplier constraint
+
+Um dos cuidados que temos de ter ao trabalhar com constraints é a configuração de tamanhos fixos (largura e altura). Conforme aprendemos, nem sempre o mesmo tamanho fica legal em um iPhone e em um iPad. Por isso, temos que aprender como utilizar tamanhos proporcionais para cada tipo de dispositivo. O Multiplier nos ajuda exatamente nisso, pois conseguimos colocar tamanhos proporcionais a visualização que estamos trabalhando.
+Como usamos o Multiplier nesta aula?
+
+Opinião do instrutor
+
+Para configurar valores com Multiplier, é necessário selecionar a constraint no storyboard ou xib. Com a constraint selecionada, basta acessar o menu lateral direito, na opção Show the attributes inspector e em seguida configurar o valor no campo Multiplier.
+
+@@08
+O que aprendemos?
+
+Nesta aula, aprendemos:
+Configurar constraints
+Através das constraints, conseguimos fazer uma série de configurações nos elementos da nossa View e, dessa forma, adaptamos o layout para que funcione em outros tamanhos de dispositivos.
+
+Multiplier
+Multiplier é muito útil para configurar um valor proporcional a outro. Ou seja, quando não queremos configurar um valor fixo, podemos dizer que ele é x em relação à View pai. Esse recurso é muito utilizado principalmente quando a View tem de se comportar em iPhones e iPads.
