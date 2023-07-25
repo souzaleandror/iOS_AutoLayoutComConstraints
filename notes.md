@@ -838,3 +838,275 @@ Através das constraints, conseguimos fazer uma série de configurações nos el
 
 Multiplier
 Multiplier é muito útil para configurar um valor proporcional a outro. Ou seja, quando não queremos configurar um valor fixo, podemos dizer que ele é x em relação à View pai. Esse recurso é muito utilizado principalmente quando a View tem de se comportar em iPhones e iPads.
+
+#### 25/07/2023
+
+@04-Editando e apagando constraints
+
+@@01
+Projeto da aula anterior
+
+Se você deseja começar o curso a partir desta aula, pode fazer o download do projeto desenvolvido até o momento.
+
+https://github.com/alura-cursos/alura-viagens-constraints/archive/958618465ae70ce83913f573a9823bf02eb27d57.zip
+
+@@02
+Incluindo imagens no projeto
+
+[00:00] Estamos de volta com o nosso projeto! Nós estávamos trabalhando no header, onde aplicamos algumas constraints proporcionais ao tamanho que a view cresce, como eu estou mostrando no simulador ao lado direito.
+[00:17] Para finalizarmos, ainda faltam alguns ajustes – como, por exemplo, a imagem, as labels de título e subtítulo; e arredondar essas duas views, tanto do header quanto do banner. A ideia é começarmos a atacar esses pontos agora.
+
+[00:32] Como utilizaremos várias imagens ao decorrer do nosso projeto, para listarmos outras viagens como Natal, Porto de Galinhas e Cancun, teremos uma imagem para cada viagem.
+
+[00:45] Vou aproveitar e vou colocar todas as imagens que utilizaremos ao decorrer do curso na pasta “Assets”, para conseguirmos ter acesso a essas imagens. Eu estou com a pasta que contém todas as imagens que utilizaremos.
+
+[01:02] Essas imagens estarão disponíveis para você fazer o download nessa seção do curso. Nós vamos colocar todas essas imagens dentro dessa parta “Assets”. Eu clico na pasta “Assets” no menu lateral esquerdo e ele abre o menu, onde eu estou passando o cursor do mouse.
+
+[01:19] E nós vamos arrastar todas as imagens da pasta “Imagens” para dentro dessa pasta “Assets”. Aproveitando que já estamos incluindo imagens, vamos aproveitar para organizarmos o nosso projeto. Como assim, “organizar”? Repare que todos os arquivos estão juntos.
+
+[01:41] Eu tenho arquivo de view junto com “AppDelegate.swift”, junto com “Assets.xcassets”. A ideia é criarmos alguns grupos para organizarmos melhor cada tipo de arquivo. À medida em que o projeto for crescendo, vai ficar mais fácil de sabermos onde está cada coisa. É uma boa prática.
+
+[02:01] O que eu vou fazer? Eu vou criar um novo grupo, clicando com o botão direito do mouse na pasta “AluraViagens > New Group". Vou chamar de "AppDelegate" e eu vou arrastar os dois arquivos, “AppDelegate.swift” e “SceneDelegate.swift”, para dentro dessa pasta.
+
+[02:15] Como eu seleciono mais de um arquivo? Eu seguro a tecla “Shift” do teclado, clico nos arquivos que eu quero selecionar e arrasto os dois arquivos para a pasta “AppDelegate”.
+
+[02:23] Eu vou criar também uma pasta chamada “Model”, onde vamos ter todas as classes que utilizaremos no projeto. Clico com o botão direito do mouse, “AluraViagens > New Folder > Model".
+
+[02:33] Vou deixar essa pasta abaixo do “AppDelegate” e carregar a pasta “Model". Você tem que tomar cuidado para não por dentro. Se eu soltar a pasta “Model” em cima da pasta “AppDelegate”, eu vou colocar ela dentro de “AppDelegate”.
+
+[02:44] Na verdade, eu não quero colocar dentro, quero colocar do lado de fora. Essa pasta “Model”, por enquanto, vai ficar vazia.
+
+[02:52] Eu vou criar uma nova pasta chamada “View”, onde nós teremos todas as views do nosso projeto — inclusive, o “ViewController.swift” e o “Main.storyboard”. Vou clicar com o botão direito do mouse, “AluraViagens > New Folder > View". Já posso arrastar essas coisas para a pasta “View”.
+
+[03:06] O header também é uma view, nós estamos desenhando a view do *header. Podemos colocar os dois arquivos, “HomeTableViewHeader.xib” e “HomeTableViewHeader.swift” dentro dessa pasta também.
+
+[03:15] Para não ficar misturado junto com o “Main.storyboard” e com o “ViewController.swift”, eu vou criar uma nova pasta dentro da pasta “View”, clicando com o botão direito do mouse, “View > New Folder > Header".
+
+[03:25] Eu vou arrastar os dois arquivos para dentro da pasta “Header”... A estrutura do nosso projeto ficou assim.
+
+[03:36] Eu vou criar mais uma pasta chamada “ViewModel”, que nós vamos utilizar também. Eu vou deixar ela embaixo. Temos o “AppDelegate”, “Model”, “View” e “ViewModel”. Dentro de “ViewModel”, nós já temos o “ViewController.swift”, o “Mains.storyboard” e o “Header”, onde nós estamos trabalhando agora.
+
+[03:57] Voltando à view “HomeTableViewHeader.xib”, que é onde vamos trabalhar agora. A primeira coisa que eu vou fazer é setar uma imagem dentro desse “UIImageView”.
+
+[04:07] Tem duas abordagens aqui. Se você precisa saber, por exemplo, o nome da imagem que o servidor retorna para você conseguir setar essa imagem nesse “UIimageView”, você precisa criar um outlet. E na hora em que você tiver acesso a esse nome, você utiliza o “Outlet.image =” o nome da imagem que você retorna, que você tem no retorno do servidor.
+
+[04:31] Nesse caso, como é uma imagem fixa nós não vamos fazer isso. Eu vou abrir o painel lateral direito, vou utilizar o menu. Repare que eu tenho aqui “Image View” e eu tenho a opção de “Image”.
+
+[04:48] Eu vou começar colocando o nome da imagem, se chama "ferias"... Olhe, coloquei a imagem, já apareceu aqui.
+
+[04:56] Um ponto importante é que a imagem não está ocupando todo o espaço disponível que nós temos no “Image View”, podemos corrigir esse problema através do “Content Mode”. Vou selecionar a imagem na view. Eu tenho a opção do “View > Content Mode” no painel lateral esquerdo.
+
+[05:16] Ele está com a opção “Aspect Fit” selecionada. Nós queremos que ele preencha todo o espaço disponível, nós vamos utilizar "Aspect Fill". A imagem se estica para que ela ocupe o espaço do “UIImage”.
+
+[05:34] Agora precisamos colocar as labels que faltam no nosso projeto. O que eu vou fazer? Eu vou adicionar uma nova label. Clico no sinal de adição na parte superior esquerda, clico e arrasto a “Label” para a view.
+
+[05:49] E eu vou colocar o título, o texto dessa label. "Painel lateral esquerdo > Text > Aproveite o verão, com:".
+
+[06:03] O que eu vou fazer aqui? Eu vou começar setando as constraints para nós conseguirmos alinhar. Um ponto importante é que essa label vai ocupar duas linhas. Abrindo o simulador, olhe só, eu tenho aqui “Aproveite o verão, com:” e ele ocupa duas linhas.
+
+[06:25] Para que ele ocupe duas linhas, precisamos configurar isso no interface builder. Repare que eu tenho no painel lateral esquerdo a opção “Lines”, onde está selecionada “1”.
+
+[06:34] Vamos mudar para “2” (duas linhas). Olhe só o que eu vou fazer, vou diminuir o espaço do título e eu vou setar a constraint. O que eu vou fazer? Abri o painel das constraints e marco "16" na margem esquerda.
+
+[06:57] Por enquanto nós podemos deixar “14” no topo. Caso não fique tão legal, podemos mudar. Marquei "16" também a margem lateral direita e clicquei em "Add 3 Constraints"
+
+[07:09] Colocamos a label, agora vamos alterar a formatação dessa label. Deixe-me ver qual fonte vamos utilizar... Como eu altero a fonte? No menu lateral direito, eu tenho a opção “Font”.
+
+[07:27] Eu clico nela, em família de fonte, eu quero uma fonte customizada, "Font > Custom". Eu vou alterar a fonte para uma nova família de fonte, eu vou selecionar a fonte "Kohinoor Devaganari". O estilo dela é “Semibold” no tamanho "22".
+
+[07:58] Agora, para finalizar essa label, eu vou alterar a cor para branco, "Color > White Color". O que eu vou fazer agora? Vou colocar a outra label. Eu clico no sinal de adição e arrasto a “Label” para a view.
+
+[08:18] Vamos alterar o texto dessa label, indo em "Menu lateral esquerdo > Text > ofertas exclusivas, somente no nosso app".
+
+[08:36] Aqui também nós teremos duas linhas. Eu vou mudar o “Lines” para "2". O que eu vou fazer com as constraints"? Eu vou setar "Standard" para a *constraint do topo, eu vou setar "16" para as margens laterais e "14" para a *constraint" inferior.
+
+[09:08] Apliquei essas constraints e cliquei em "Add 3 Constraints". Agora nós vamos alterar a formatação dessa label! Vamos utilizar algo parecido, uma família de fonte “Custom”, a mesma fonte que utilizamos acima. "Font > Custom > Kohinoor Devaganari".
+
+[09:32] E o estilo, ao invés de “Semibold”, é regular e o tamanho é “12”. "Style > Regular > Size > 12". Vou alterar a cor para branco, "Color > White Color". Nós temos os textos exatamente como nós havíamos configurado. O tamanho da margem inferior da view da label é “14”, a superior é “14” também.
+
+[10:00] Vou rodar o aplicativo no simulador do iPhone para testarmos. Vamos ver como ficou.
+
+[10:10] Legal, temos algo parecido com o que nós precisamos! Incluímos as imagens, organizamos o projeto e aplicamos as fontes e o estilo que precisamos. A seguir continuaremos com o arredondamento dessas views!
+
+@@03
+Arquivo das imagens
+
+Para baixar as imagens da aula, clique neste link.
+Bons estudos!
+
+https://caelum-online-public.s3.amazonaws.com/2095-ios-layout/04/Alura-imagens-ios-layout.zip
+
+@@04
+Arredondando view
+
+[00:00] Vamos seguir com o arredondamento do banner e também do header! Como nós já criamos os outlets tanto do banner quanto do header, fica muito mais fácil.
+[00:12] É somente entramos na classe do header e aplicarmos o arredondamento. Abri o “HomeTableViewHeader.siwft". O que eu vou fazer? Vou começar chamando o banner. Na verdade, só temos o outlet do bannerImageView, nós precisamos criar um novo outlet.
+
+[00:32] Eu vou voltar na view "HomeTableViewHeader.xib". Como nós arredondar toda a parte da margem e da label, nós precisamos ter acesso a essa view no nosso código, por isso eu vou criar um outlet dessa view no nosso código. Clico no penúltimo ícone na barra no lado esquerdo e em "Assistant".
+
+[00:57] Muito importante o banner estar selecionado, por isso é legal renomearmos corretamente os nossos arquivos. Com o banner selecionado, seguro a tecla “Ctrl”, clico no banner e arrasto para o código. Vou chamar de "bannerView" e clicar em "Connect".
+
+[01:21] Agora, sim, nós temos acesso a esse banner no método configuraView. Abri o “HomeTableViewHeader.swift". Vou chamar bannerView.layer.cornerRadius = 10. Dessa forma, nós conseguimos configurar um valor para arredondarmos a view. Vou rodar o projeto para testarmos. Vamos abrir o simulador para vermos esse ajuste.
+
+[01:52] Parece que não funcionou! Na verdade, precisamos aplicar uma máscara de corte além do cornerRadius, precisamos aplicar uma máscara de corte. Como fazemos isso? Digitanso banner view.layer.masksToBounds = true.
+
+[02:10] Caso você arredonde e não veja diferença, você pode aplicar o masksToBounds. Olhe só, que legal!
+
+[02:19] Agora nós temos o nosso banner arredondado! Primeiro passo está OK! Agora nós precisamos arredondar o header.
+
+[02:31] O header já temos acesso, já criamos um outlet para ele. O que eu vou fazer é simplesmente chamar headerView.layer.cornerRadius =, eu vou colocar um valor maior, 100. Vou rodar o projeto, nós vamos ver como vai ficar.
+
+[02:57] Olhe só que interessante, ficou redondo. Nós estamos arredondando toda a view, é isso que eu queria mostrar para você. Na verdade, precisamos arredondar somente a parte debaixo que tem esse arredondamento. A parte de cima continua normal.
+
+[03:18] Quando setamos esse cornerRadius = a algum valor, estamos arredondando toda a view - e, na verdade, precisamos arredondar só a parte debaixo.
+
+[03:29] É como se fosse um bolo. Fazendo um bolo, você precisa aplicar uma máscara nesse bolo, no caso culinário, uma forma. Aqui com as views também, nós podemos colocar uma forma - aqui chamamos de máscara, onde indicamos qual parte queremos arredondar.
+
+[03:49] É basicamente por esse caminho que vamos pensar para solucionarmos esse problema, vamos colocar uma máscara de corte que corte somente a parte inferior. Vamos ver como fazemos isso?
+
+[04:03] Eu tenho uma opção no código, que é headerView.layer.maskedCorners = [.]. Eu passo uma lista do que eu quero arredondar, um array onde eu posso passar essas quatro opções, layerMaxXmaxYCorner, layerMaxXMinCorner, layerMinXMaxYCorner e layerMinXMinYCorner.
+
+[04:36] Tem várias opções. O que significa cada uma delas? Veremos agora! Eu tenho no meu Sublime Text uma explicação bem legal, que é a seguinte: aqui eu tenho todas as opções que eu apresentei para você na hora de criar o array. Depois é qual lado ele vai arredondar.
+
+[05:06] No nosso caso, precisamos arredondar a parte inferior. Nós temos duas opções para arredondarmos a parte inferior: bottom left corner e bottom right corner.
+
+[05:18] Ou seja, começamos arredondando a parte inferior esquerda e terminamos na parte inferior direita. É basicamente uma curva que ele faz. Para fazermos isso, utilizaremos as duas opções: layerMinXMaxYCorner e layerMaxXMaxYCorner.
+
+[05:33] E se eu quisesse arredondar a parte superior? Nós temos top left corner e top right corner, são as duas outras opções que servem para arredondarmos a parte superior. Conforme o que você precisa, você utiliza essas opções. Eu vou utilizar [.layer.MinXMaxYCorner, .layerMaxXMaxYCorner].
+
+[06:02] O que fizemos? Recapitulando, colocamos um valor para arredondamento, que é o 100; vimos que ele arredondou toda a view e não era isso que queríamos, queríamos que ele arredondasse somente a parte inferior.
+
+[06:16] Por isso, utilizamos a opção maskedCorners onde passamos uma lista entre arrays de quais são as opções que queremos que ele arredonde. Eu vou rodar o projeto para testar.
+
+[06:34] Já arredondamos a parte inferior, repare que em cima agora está correto. Ainda precisamos criar alguns ajustes porque ele está muito arredondado, o raio dele está diferente do exemplo que eu tenho aqui na parte direita.
+
+[06:56] Repare que no exemplo é bem mais sutil, só uma borda de arredondamento e no nosso projeto está muito maior; mas o que importa é que entendemos como arredondamos uma view, como criamos máscaras para arredondar view de acordo com o lugar que queremos.
+
+[07:13] E agora é resolvermos isso! Continuaremos no próximo vídeo vendo como melhoramos esse arredondamento.
+
+@@05
+Editando as constraints do Header
+
+[00:00] Vamos finalizar o nosso header. Acabamos de arredondar e percebemos que ficou bem mais redondo do que deveria. A ideia desse vídeo é alinharmos esse detalhe conforme eu estou exibindo no nosso layout proposto, no nosso gabarito.
+[00:17] Temos um arredondamento bem mais sutil, vamos trabalhar agora para que o nosso projeto fique assim. O que precisamos entender? Na verdade, está quase tudo certo. A ideia é esticarmos essa view azul, a view principal do header, para fora da área total.
+
+[00:44] O primeiro detalhe que temos que perceber aqui é que nós setamos constraints na margem esquerda, leading, e na margem direita, trailing; para que ele fique com espaçamento de “0” tanto na margem esquerda quanto na margem direita.
+
+[01:01] Ou seja, a view do header está ancorada na view principal, que é a “HomeTableViewHeader”; ou seja, se a view aumentar, ela aumenta e se a view diminuir, ela também diminui. Isso porque ela está pinada, ancorada com a view principal do header.
+
+[01:22] E o que teremos que fazer? A ideia é deletarmos essas constraints de margem esquerda e margem direita e setar uma largura maior para que ela fique realmente maior do que o tamanho total da view.
+
+[01:38] Essa é a ideia! Vamos ver na prática como é simples. O que vamos começar a fazer? Eu vou selecionar a view do header, estou com a “Header View” selecionada e logo em seguida eu vou analisar quais são as constraints que eu tenho nessa view.
+
+[01:58] Olhando no menu lateral direito, eu consigo visualizar quais são as constraints, margem esquerda, leading, margem direita, trailing, topo e margem inferior e uma altura.
+
+[02:09] Como eu acabei de comentar, vamos deletar a constraint da esquerda e a constraint da direita. Mas lembra a regra que precisamos da posição “X”, da posição “Y”, da largura e da altura? Pois é, ele vai reclamar! Mas setamos uma largura, dizemos explicitamente qual é a largura.
+
+[02:30] Vou deletar, clico na constraint esquerda no menu lateral direito e aperto “Delete” no teclado. Clico na constraint direita no menu lateral direito e aperto “Delete” no teclado de novo.
+
+[02:39] E nós temos um erro de constraint normal, não tem problema. Ele vai falar que precisamos setar uma largura. E o que faremos? Vamos setar essa largura de forma explicita, abrindo o painel inferior de constraints.
+
+[02:53] Até agora estávamos falando implicitamente qual era a largura, ancorando a view na margem esquerda e margem direita. Agora vamos falar explicitamente que é a largura “Width".
+
+[03:04] Eu vou colocar uma largura bem maior do que a que está aqui, 414, não tem problema, é para a view realmente ultrapassar o tamanho total que nós temos. Olhe, só vou setar aqui o valor de 1000 e vou adicionar essa constraint, clicando em "Add 1 Constraint".
+
+[03:19] E ele vai continuar reclamando em relação à posição “X”. Vou clicar na bola vermelha no painel lateral esquerdo. O que eu vou fazer agora? Eu vou alinhar minha view ao centro da view principal. Ainda não trabalhamos com alinhamento de constraint, eu vou mostrar agora como se faz isso.
+
+[03:39] Olhe só que legal, eu consigo alinhar os elementos na tela em relação a alguma coisa. Sempre que você precisar alinhar um título, alinhar um botão ou alinhar qualquer coisa, tanto na horizontal quanto na vertical, você vai utilizar o menu de alinhamento.
+
+[03:55] É o menu ao lado do menu das constraints, no canto inferior direito da tela, que tem o símbolo de duas barras. Nós temos o menu de adicionar constraints ao lado - já estamos nos acostumando com ele. Ao lado esquerdo temos o menu de alinhamento.
+
+[04:09] O que faremos? Alinharemos o elemento horizontalmente. Eu vou pinar a opção “Horizontally in Container” e vou clicar em “Add 1 Constraint". Com isso, eu resolvo o meu problema. Daqui a pouco falaremos um pouco mais sobre esse alinhamento de constraint.
+
+[04:27] O que eu preciso saber nesse momento? Eu preciso entender que a view azul, que é o “Header View”, ficou maior do que o tamanho total da view que vai ser exibida.
+
+[04:41] Por que isso? Porque ela ficando maior, eu consigo deixar o arredondamento dela mais sutil - é exatamente o que precisamos.
+
+[04:51] Como nós aumentamos o tamanho da view, eu vou também aumentar um pouco o valor do cornerRadius do headerView. Está 100, eu vou colocar o valor de 500. Coloquei 500, aumentei a largura da view e abri o “HomeTableViewHeader.xib".
+
+[05:11] Agora ela não está mais presa na margem esquerda e direita, e sim, com uma largura fixa para que ela fique maior. Nós vamos rodar o nosso app para testarmos.
+
+[05:23] Cliquei em build, nós vamos subir o simulador e vamos conferir qual é o resultado. Olhe só que bacana, nós temos um arredondamento bem melhor, igual ao proposto no nosso gabarito.
+
+[05:39] Só que tem um detalhe, a label “alura viagens” desapareceu quando nós esticamos a view. Vamos arrumar isso agora. O que eu preciso fazer aqui? Na verdade, a label está aqui.
+
+[05:55] Visivelmente na view XIB eu não estou conseguindo identificar a posição, mas quando eu seleciono o elemento no menu, ele me mostra onde ele está. Eu vou dar dois cliques em cima da label e com a seta do teclado eu vou pressionar para o lado direito.
+
+[06:18] A ideia é deixar a label nessa posição, mas eu só vou explicar mais uma vez o alinhamento das constraints.
+
+[06:26] Vamos supor que eu precise alinhar essa label ao centro da view, como eu faço isso utilizando as constraints? Eu posso clicar na label, segurar a tecla “Ctrl” e arrastar para a view principal. Eu arrasto para a view, “Home Table View Header”, no menu lateral esquerdo.
+
+[06:45] Ou uso o menu lateral esquerdo. Nesse caso, pelo menu fica mais fácil. Seleciono a label, seguro a tecla “Ctrl” e arrasto para o menu. Eu posso alinhar ela ao centro horizontalmente, ou verticalmente alinhar minha label ao centro.
+
+[07:08] Dependendo do layout, você escolhe qual alinhamento você quer utilizar. Você pode pensar “eu quero deixar ao centro de tudo”, então alinhe ele ao centro horizontalmente e verticalmente também.
+
+[07:20] Nesse caso, eu quero alinhar minha label verticalmente, eu vou escolher "Center Horizontally in Safe Area". Clico em “alura viagens” na view, ele vai reclamar porque ainda falta setarmos algumas constraints.
+
+[07:35] Não tem problema. Vou setar uma constraints para pinar a label acima... E eu tenho a minha label centralizada horizontalmente”
+
+[07:48] É muito útil, nós vamos trabalhar mais vezes com esse alinhamento, mas é importante que você saiba que você pode alinhar os elementos ao centro de uma forma bem fácil, que é esse utilizando as constraints.
+
+[08:03] Como nesse caso não queremos alinhas ao centro, eu vou apertar as teclas "Command + Z" só para desfazer. "Command + Z" mais uma vez. Agora vamos pinar a nossa label com a margem esquerda.
+
+[08:19] O que eu vou fazer? Eu tenho que tomar um cuidado aqui pelo seguinte: o header está bem mais largo e o banner tem uma constraint pinando ele à esquerda e à direita com o valor de 20. Como eu vejo o valor da constraint? Clico nela e ele me mostra na variável “Constant” no menu lateral direito. O valor dessa constraint é 20.
+
+[08:51] Por isso temos que tomar cuidado! Vamos supor que eu queira colocar o mesmo valor na label. Eu a seleciono e abro o painel de constraint... Nós acabamos de ver que o valor é 20!
+
+[09:01] Venho na constraint lateral esquerdo e coloco 20, acima eu vou pinar com 48 mesmo. Clico em "Add 2 constraints" e a minha label é redimensionada para a esquerda.
+
+[09:16] Por quê? Porque colocamos 20 em relação ao header, a label foi lá para o canto esquerdo mesmo. Por isso que temos que tomar cuidado e entendermos qual é a hierarquia da view que queremos alinhar etc., para termos certeza realmente que eu estou colocando a constraint no local correto.
+
+[09:38] É muito comum errar, você vai colocar, não vai dar certo e você vai voltar. Trabalhar com constraint é assim mesmo. Até pegar o jeito, as percepções... É a prática! Colocou uma constraint errada? Apague, volte e começe de novo. É o que eu vou fazer aqui.
+
+[09:55] No caso, setamos uma constraint com a margem de 20 em relação ao header e eu não quero fazer isso, eu quero que ela fique com a margem de 20 em relação a view, a view onde eu estou passando o ponteiro do mouse.
+
+[10:13] Vamos voltar, teclas "Command + Z” duas vezes... Voltei. Certifiquei que a minha label não tem mais nenhuma constraint para poluir a view. Como eu faço isso? Seleciono a label, venho na régua, no “Show the Size Inspector” e se não tiver nenhuma seção de constraints significa que a label não possui constraint.
+
+[10:36] Vamos aplicar agora! Vou utilizar o menu lateral esquerdo que fica mais fácil nesse caso, seleciono “Título Label”, seguro a tecla Control, arrasto para “Home Table View Header”, que é a view do xib total.
+
+[10:50] Solto e eu vou aplicar uma constraint de margem a esquerda, ou seja, lembra da nomenclatura? A esquerda é leading, a direita é trailing. Vou selecionar "Leading Space to Safe Area", clico em “Titulo Label”.
+
+[11:05] E agora eu coloco uma constraint de altura. “Abre painel das constraints > Altura > Add 1 Constraint". Eu tenho aqui uma constraint ancorando com a view “HomeTableViewHeader” e pinando também no topo.
+
+[11:25] Conseguimos fazer uma série de ajustes e vimos alguns cuidados que temos que ter quando manuseamos constraint. Não deu certo? Use as teclas “Command + Z”.
+
+[11:34] Nós vamos ver de novo a hierarquia da view, em relação ao que eu estou colocando. Vamos trabalhando, vamos descobrindo e vamos deixando o nosso layout responsivo. Para testar toda essa implementação eu vou rodar mais uma vez o simulador... E temos um resultado parecido com o nosso gabarito!
+
+[11:56] Fechamos a implementação do header! Foram algumas aulas até chegarmos nesse resultado, mas fomos passando passo a passo para entendermos de fato tudo que estamos fazendo.
+
+[12:08] Agora que já terminamos essa parte, a seguir começaremos a trabalhar com as células customizadas da nossa lista. Por exemplo: essa célula que lista realmente as viagens.
+
+@@06
+Entendendo erros de constraints
+
+Ao aplicarmos Constraints nos elementos do storyboard, é comum o Interface Builder apontar alguns erros, que ocorrem porque temos de satisfazer todas as condições das Constraints (eixos X e Y, largura e altura).
+Quando o storyboard está apontando erros, uma forma simples de entender e solucioná-los é:
+
+Clicar no botão de erro do ViewControllerScene, verificar a mensagem e solucionar o problema.
+ 
+Alternativa correta! Sempre que faltar alguma regra para a Constraint funcionar, o storyboard lança um botão de erro apontando o problema.
+Alternativa correta
+Clicar no botão de erro e apagar o elemento que está com problema no storyboard.
+ 
+Alternativa correta
+Com um build do aplicativo, os erros de Constraints desaparecem, pois o storyboard acaba solucionando o problema.
+
+@@07
+Faça como eu fiz: Editando constraint
+
+Constraints são dinâmicas, ou seja, sempre precisamos editá-las ou até mesmo removê-las. É comum no dia a dia configurarmos um valor e depois precisarmos alterá-lo. Para isso, o interface builder nos permite realizar essa alteração facilmente através do campo constant. Como fazemos isso?
+
+Opinião do instrutor
+
+Para editar o valor de uma constraint, primeiro precisamos selecioná-la no storyboard ou xib. Logo em seguida, no menu lateral esquerdo, precisamos abrir a aba Show the Attributes Inspector e alterar o valor no campo Constant.
+Em versões mais recentes a aba Show the Attributes pode estar localizada no menu lateral direito e não esquerdo.
+
+08
+O que aprendemos?
+
+Nesta aula, aprendemos:
+Arredondamento de Views
+Aprendemos a trabalhar com as customizações de Views e um dos itens que nos aprofundamos foi o arredondamento. Vimos que é possível arredondar os 4 cantos ou, ainda, somente os superiores e os inferiores.
+
+Editar o valor de uma constraint
+Conseguimos editar o valor de uma constraint sem precisar apagá-la e recolocá-la. Fazemos isso através do menu Show the Attributes Inspector, na opção constant.
