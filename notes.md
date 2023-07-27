@@ -1110,3 +1110,492 @@ Aprendemos a trabalhar com as customizações de Views e um dos itens que nos ap
 
 Editar o valor de uma constraint
 Conseguimos editar o valor de uma constraint sem precisar apagá-la e recolocá-la. Fazemos isso através do menu Show the Attributes Inspector, na opção constant.
+
+#### 27/07/2023
+
+@05-Criando células customizadas
+
+@@01
+Projeto da aula anterior
+
+Se você deseja começar o curso a partir desta aula, pode fazer o download do projeto desenvolvido até o momento.
+
+https://github.com/alura-cursos/alura-viagens-constraints/archive/b895f3c43e060e739c7406840c581deffd5e2ce3.zip
+
+@@02
+Criando uma nova célula
+
+[00:00] Agora vamos começar a criação da célula da nossa TableView. A ideia é criar um protótipo parecido com esse, onde nós temos vários elementos dentro de uma única célula.
+[00:13] Começando com uma imagem, em seguida várias labels, o nome do pacote, o que contempla, diárias, o preço sem desconto e com desconto, quantidade de vezes e uma informação de status de cancelamento.
+
+[00:33] Como queremos criar uma célula customizada para a nossa TableView precisamos criar uma classe, seja programaticamente ou através do interface builder; precisamos criar uma classe para desenhar essa célula. É isso que faremos agora!
+
+[00:50] Como nós estamos utilizando o XIB, nós vamos continuar criando uma view visual no interface builder para montarmos essa célula. Como vamos criar uma nova view, vamos criar a classe dentro da pasta “View”, que nós criamos para organizar o nosso projeto, nós já temos a pasta “Header”.
+
+[01:14] Eu vou criar um novo grupo chamado células, "Botão direito do mouse em View > New Group > Cells". Para concentrarmos todas as células e futuras células que nós formos criar dentro dessa pasta.
+
+[01:28] Como eu crio uma nova célula? "Botão direito do mouse em Cells > New File". Eu vou manter a opção “Cocoa Touch Class” selecionada e clicar em "Next".
+
+[01:40] Aqui é importante que esse “Subclass of:” esteja com a opção “UITableViewCell” marcada, porque nós queremos criar uma célula para TableView. Eu vou manter essa opção selecionada e eu vou chamar a célula de "ViagemTableViewCell".
+
+[02:05] Eu vou aproveitar e também marcar a opção “Also create XIB file”, para também criar um XIB file, para trabalharmos com o XIB, a view visual na criação da célula. Linguagem vou usar a Swift. Vou clicar em "Next" e em seguida, "Create".
+
+[02:26] O que eu vou fazer? Eu vou começar abrindo o XIB e vou alterar a altura da célula. Vou abrir o menu lateral direito. Eu tenho um campo onde eu posso configurar a largura e a altura.
+
+[02:44] Na altura eu vou colocar "400", ele fica já com o tamanho com que vamos realmente trabalhar.
+
+[02:54] Uma coisa importante aqui é a seguinte: se você reparar, a célula tem uma sombra preta em volta. Vamos precisar também implementar esse efeito para copiarmos exatamente esse layout.
+
+[03:15] Por isso, eu vou começar criando uma view que vai ser a view de fundo da nossa célula, que mais a frente utilizaremos para colocarmos a sombra.
+
+[03:26] Eu venho no sinal de adição no canto superior direito. Vou criar uma view, seleciono “View” e arrasto para dentro da célula que nós criamos. Essa view vai ser branca mesmo, é imperceptível para o usuário que tem uma view aqui. Ela vai somente nos auxiliar na hora de criarmos a sombra na célula.
+
+[03:53] Vamos começar adicionando uma constraint para posicionarmos ela no local correto. Abro o menu de constraints e vou pino ela em todos os cantos - ao topo, a direita, na margem inferior e na margem a esquerda. A única coisa que eu vou mudar são os valores, eu vou deixar uma margem de 10 para todos os cantos.
+
+[04:21] E clico em "Add 4 Constraints". Ele deve ficar algo parecido com isso.
+
+[04:27] Eu tenho todas as margens que eu criei com o valor de 10. Agora vamos copiar a célula que nós temos no exemplo. Abri o simulador. Nós vamos começar colocando uma imagem, vamos abrir mais uma vez o sinal de adição - que é a nossa biblioteca de elementos.
+
+[04:47] Você vai procurar por “Image View” e vai arrastar para dentro dessa view que nós acabamos de criar. Repare que a hierarquia de view tem que ser assim mesmo, a imagem tem que estar dentro da view de fundo que acabamos de criar. Vou até renomear essa view para "BackgroundView".
+
+[05:13] Vai ser a view que nós vamos utilizar para colocarmos a sombra. Vou adicionar algumas constraints nessa imagem. Abri painel de constraints. Quais são as constraints que eu vou colocar? Superior em 0, esquerda em 0 e direita em 0. A margem esquerda (leading) é 0, margem direita (trailing) é 0 e ao topo também 0.
+
+[05:39] Eu vou deixar uma altura de 180 e vou adicionar a constraint. "Marca Height > 180 > Add 4 Constraints". Já temos uma imagem, agora vamos seguir colocando uma label! Temos no exemplo a label com o titulo do pacote.
+
+[06:00] Clico na biblioteca (sinal de adição) e adiciono uma nova label. "Seleciona Label > Arrasta para a view". Eu vou alterar a informação de texto. Como eu altero o texto da label? Venho no menu lateral esquerdom onde eu tenho a propriedade de texto (“Text”) e eu vou alterar para "AÉREO + HOTEL".
+
+[06:29] Agora eu vou alterar a família de fonte, eu venho em "Font > Custom". Vamos manter a fonte que já estávamos utilizando, "Konihoor Devanagari". Eu vou apenas copiar a formatação dela, "Semibold > Tamanho 16".
+
+[06:57] Agora já podemos setar algumas constraints! O que eu vou fazer? Vou arrastar o tamanho da label para que ela fique igual tanto na margem esquerda quanto na margem direita e vou adicionar algumas constraints. Eu abri painel de constraints.
+
+[07:16] Aqui é importante marcarmos a mesma margem para todas as labels, para que elas não fiquem tortas. Eu vou colocar o valor 10 em todas as constraints e vou pinar a minha label. Clico em "Add 4 Constraints".
+
+[07:33] Agora vamos para a próxima label, vamos mais uma vez no sinal de adição. Eu adiciono a label, segurando ela e arrastando para a view". Vou alterar o texto dessa *label para "Gramado + Rota do Chocolate".
+
+[07:53] Aqui estamos deixando as informações fixas apenas para deixarmos nossa célula visualmente pronta. A seguir utilizaremos um mock, um JSON à simulação da resposta de um servidor com várias viagens diferentes.
+
+[08:09] Esses textos vão ser alterados de acordo com a viagem. Aqui é apenas para deixarmos a célula pronta, para que consigamos usar em todas as viagens.
+
+[08:21] Qual é a informação dessa fonte? Vou utilizar uma família de fonte customizada. Aqui nós utilizaremos uma fonte quase igual, mas a família de fonte é diferente. Eu vou selecionar a fonte “Kohinoor Telugu” no tamanho 16.
+
+[08:43] Já posso setar algumas constraints, abrindo o painel de constraints. A constraint lateral esquerda vai ser 10 e o topo, 15. Eu vou arrastar a label até o final da view para a direita.
+
+[08:57] Vamos fazer de novo. "Abre painel de constraints > Lateral esquerda > 10 > Topo > 15 > Lateral direita > 10 > Add 3 Constraints". Já temos aqui uma outra label. Agora vamos continuar com o próximo texto!
+
+[09:15] Agora vamos utilizar o seguinte: como a fonte é igual, eu vou passar uma dica para que você consiga ganhar tempo na hora de construir o layout. Quando queremos duplicar uma label com as mesmas características, nós podemos utilizar a tecla “Option”. Eu clico na label e arrasto para baixo.
+
+[09:38] Eu vou apenas alterar o texto dessa label, "3 Diárias - 1 Pessoa". Agora também setaremos algumas constraints. "Abre painel das constraints > Lateral esquerda > 10 > Topo > 15 > Lateral direita > 10 > Add 3 Constraints".
+
+[10:03] Agora vamos para a próxima label! A próxima label é o preço sem desconto. O que eu vou fazer? Eu vou adicionar uma nova label e vou duplicar para ganharmos tempo. "Option > Clica na label a ser duplicada > Arrasta para baixo".
+
+[10:22] E eu vou alterar apenas o texto, "A partir de". Nós vamos copiar a formatação. É quase que a mesma fonte, a única coisa que vamos mudar é o tamanho para "14".
+
+[10:41] Como eu vou ter aqui uma label ao lado, eu vou diminuir o tamanho e vou setar algumas constraints apenas na margem esquerda. "Abre painel de constraints > Margem esquerda > 10 > Topo > Add 2 Constraints". Eu vou aumentar a “Constant” para 15.
+
+[11:15] E agora eu vou colocar o valor da viagem sem desconto. Qual é o valor sem desconto? Vamos deixar com um valor fixo. Eu vou utilizar a tecla “Option” para copiar, eu clicar na label e vou arrastar para o lado. Vou alterar o texto deixando um valor fixo, "R$ 1.138".
+
+[11:38] Aqui é legal! Eu vou dar um zoom para nos ajudar a visualizar, porque eu vou pinar essa label em relação à label ao lado e eu vou centralizar ela verticalmente.
+
+[11:49] Verticalmente, eu vou centralizar minha label bem ao centro da label ao lado. Como eu faço isso? Seguro a tecla “Ctrl”, arrasto para o lado e vou pinar “Horizontal Spacing” - que é a mesma coisa que pinar pelo painel de constraints.
+
+[12:08] Foi isso que eu fiz, vou apertar a tecla “Esc”. Agora vou centralizar verticalmente. Clico de novo com a tecla “Ctrl” selecionada e arrasto para o lado, "Center Vertically". Eu já tenho a nossa label.
+
+[12:26] Agora vamos para a label do preço. Vou segurar a tecla “Option”, vou arrastar para baixo e solto. Vou alterar o texto para "R$ 569". Vou alterar as informações dessa fonte. Nós temos uma fonte customizada, eu vou voltar para a família de fonte que estávamos utilizando, que é a “Devanagari”, “Semibold” e o tamanho é “16”.
+
+[13:02] Agora eu vou alterar a cor dessa fonte. Como eu altero a cor? Na opção “Color”, logo abaixo do texto da label. Eu vou escolher a opção “Orange Color”.
+
+[13:17] Agora nós vamos setar algumas constraints para essa label. A mesma coisa: "Abre painel de constraints > Margem lateral esquerda > 10". Prendo acima e adiciono constraint, clicando em "Add 2 Constraints".
+
+[13:30] O que é importante aqui? Eu vou ter também uma label logo ao lado dessa label do valor da viagem. Vou pegar as informações dessa label, em até 10 vezes. Vou segurar a tecla “Option”, vou copiar mais uma vez a label acima, "Tecla Option > Segura > Arrasta para baixo".
+
+[13:48] Elas vão ter mais ou menos a mesma formatação. Eu vou alterar o texto: "Em até 12x". Qual é a fonte dessa label? Nós vamos copiar agora, a família de fonte é a mesma que estamos utilizando: tamanho “12” e vamos em "Font > Konihoor Telugu".
+
+[14:14] E agora eu centralizo essa label em relação à label ao lado. É o mesmo esquema que fizemos acima: "Clica na label > Tecla Ctrl > Arrasta para o lado > Horizontal Standard Spacing" e vamos centralizar verticalmente, "Center Vertically".
+
+[14:29] Agora vamos para a última label, que é a label de status de cancelamento. Eu copiar uma label qualquer, "Option > Segura > Arrasta". O texto é “Cancelamento Grátis”, vamos alterar o texto: "Cancelamento Grátis".
+
+[14:52] Vamos mudar a formatação, em "Style > Regular > Size > 12" e vamos alterar a cor para verde, em "Color > System Green Color". Vou setar algumas constraints, "Margem lateral esquerda > 10 > Topo 4 > Margem lateral direita > 10 > Add 3 Constraints".
+
+[15:22] Vou só aumentar um pouco o tamanho da constraint de topo, está 5, vou colocar 7. "Clica na label > Painel lateral direito > Constant > 7". Margem esquerda de 10 e margem direita de 10 também.
+
+[15:38] Nós acabamos de criar o desenho da célula que vamos utilizar na nossa TableView! Ainda precisamos de alguns passos para conseguirmos utilizar essa célula, registrarmos essa célula na TableView, instanciarmos a célula e tudo mais.
+
+[15:57] A seguir, continuaremos com a implementação dessa célula de viagem customizada!
+
+@@03
+Registrando a célula na TableView
+
+[00:00] Continuando, agora que nós já desenhamos a célula, nós precisamos registrá-la na TableView!
+[00:07] Registrar a célula nada mais é do que indicar para a TableView quais são as células que ela pode renderizar, quais são as células que ela conhece para ser usada na listagem.
+
+[00:18] E como fazemos para registrar? Eu vou voltar no “ViewController.swift", onde nós temos acesso ao outlet da TableView, e eu vou chamar o método viagensTableView.register. Repare que temos aqui vários métodos construtores para registrarmos. Basicamente, podemos passa o Nib ou uma cellClass.
+
+[00:46] Se você estiver trabalhando com o interface builder, com o XIB, utilizaremos o método UINib. Se você está criando a sua célula programaticamente, você vai utilizar cellClass. Basicamente, é essa a diferença. Eu escolhi a opção (nib: UINib?.
+
+[01:09] E eu vou fazer o seguinte: eu vou instanciar o nosso XIB, UiNib:. Ele me pede um nome, (nbiName:. É o nome da própria classe, vou copiar ViagemTableViewCell e colar como string, "ViagemTableViewCell".
+
+[01:30] Como nós estamos criando tudo no mesmo pacote, no mesmo bundle, eu não preciso passar nada, por isso deixo bundle: nill. Aqui é muito importante passarmos um identificador para a célula. A cada célula que criamos, precisamos colocar um identificador para a TableView saber qual célula é qual na hora de renderizar.
+
+[01:52] Ainda não fizemos isso, vamos colocar um identificador para a célula. Eu venho no interface builder, clico em uma da view da célula e no menu lateral direito, repare que temos a opção “Identifier”. "Abre ViagemTableViewCell.xib > View > Menu lateral direito".
+
+[02:09] Onde podemos setar um identificador para a nossa célula, geralmente eu costumo colocar o nome da própria classe que controla essa célula - nesse caso, "ViagemTableViewCell".
+
+[02:22] Colei o nome e apertei a tecla “Enter”. Nós já colocamos o identificador, vou voltar no "ViewController.swtift". Eu vou passar o identificador como string: forCellReuseIdentifier: "VIagemTableViewCell").
+
+[02:37] Nós já registramos a nossa célula! Um detalhe é que estamos criando várias coisas sobre a TableView no método viewDidLoad. É interessante criarmos um novo método chamado func configuraTableView() {, onde podemos recortar e colar essas linhas de código que fizemos agora. "Copia linhas 16 a 18 > Cola linha 21".
+
+[03:04] Deixamos um método só para configurarmos a TableView. Como tiramos as linhas do viewDidLoad, precisamos chamar o método aqui: configuraTableView().
+
+[03:16] O que precisamos fazer agora? Precisamos alterar o método onde de fato instanciamos a célula, que é o método cellForRow, onde criamos a célula. Estamos utilizando uma célula genérica, onde estamos apenas listando um título qualquer. Agora não queremos mais essa célula genérica, nós queremos instanciar a célula que acabamos de criar.
+
+[03:44] Como eu faço isso? Eu vou apagar as linhas 34 e 35. Vou criar uma constante: let_ celulaViagem =. Quando eu coloco um identificador na célula, eu consigo instanciar essa célula através da TableView; ela tem um método que utiliza para reutilizar as células.
+
+[04:12] Basicamente, todas as células são praticamente iguais, não faz sentido instanciarmos toda hora uma célula nova. A TableView tem essa inteligência de reutilizar essas células. É uma boa prática a gente sempre trabalhar com a reutilização das células.
+
+[04:31] Como eu faço isso? Eu chamo a TableView e utilizo o método tableView.dequeueReusableCell(withIdentifier:. Eu passo o identificador que eu dei para a célula. Qual foi o identificador? O ViagemTableViewCell.
+
+[04:50] Aqui é muito importante você ter certeza que o identificador que você colocou na view da célula, que no caso foi o ViagemTableViewCell, é exatamente o mesmo que você registrou e que nós estamos utilizando agora no dequeueReusableCell da TableView.
+
+[05:16] Caso você coloque um identificador de célula lá no interface builder e aqui você coloque um identificador diferente, ele vai dar crash. Sempre é bom confirmar! Caso dê crash ou algo assim, você procura por esse problema. Você pode ter trocado ou pode ter colado o nome errado, é importante se atentar nesse detalhe.
+
+[05:42] O nome que você colocar no identificador da view tem que ser o mesmo do identificador que você colocou para registrar a célula e para reutilizar a célula. Aqui faremos um casting do tipo da célula que nós temos, que é as? ViagemTableViewCell.
+
+[06:03] E agora eu retorno essa célula, return celulaViagem. Ele está reclamando porque ele espera que retornemos uma célula sem ser opcional - e da forma que estamos fazendo aqui, estamos dando um casting para esse tipo; ou seja, pode ser que ele condiga e por ser que ele não consiga converter a célula para essa classe.
+
+[06:27] O que precisamos fazer? Uma validação, if let ou um guard let, o que você achar melhor. Nesse caso, eu vou utilizar guard let. Se ele não conseguir desembrulhar a célula com segurança, eu estouro um erro e eu já saberei que tem algum problema com a célula: else { fatalError("error to create ViagemTableViewCell").
+
+[06:55] Agora a celulaViagem não é mais opcional porque nós utilizamos o guard e conseguimos retornar. Vamos fazer um teste? Vamos rodar o nosso aplicativo e vamos ver se já estamos conseguindo visualizar essa nova célula.
+
+[07:12] Subiu o simulador propositalmente. Eu já sabia que não iríamos conseguir ver, mas é importante mostrar o erro para que você entenda quais são os métodos que nós estamos utilizando.
+
+[07:26] Não estamos conseguindo ver a célula pelo seguinte detalhe: quando trabalhamos com a TableView ela por padrão, por default, tem uma altura específica.
+
+[07:37] Ela tem um valor “X” de altura e a célula que nós acabamos de criar tem uma altura maior, uma altura diferente do que a altura padrão que a TableView está acostumada a trabalhar. Qual é a altura que nós colocamos aqui? Altura de 400.
+
+[07:59] Estamos conseguindo instanciar a célula, mas a TableView não sabe que queremos utilizar essa altura de 400. Precisamos configurar a nossa TableView para que ela consiga entender que queremos uma altura de 400.
+
+[08:14] Como fazemos isso? Através de um método bacana que se chama heightForRow. Vamos utilizar ele no código: func tableView(_ tableView UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {}.
+
+[08:23] E ele espera que retornemos um CGFloat. Vamos dar um return da altura da célula que nós criamos: return 400. Vamos só confirmar. "Abre ViagemTableViewCell.xib > Clica na view", retornamos o valor de 400 e abrimos o “ViewController.swift". Vou rodar mais uma vez o nosso aplicativo.
+
+[08:56] Olhe só que bacana, temos aqui as nossas células! Por que está branco? Porque não setamos nenhuma imagem. Só para testar, eu vou colocar aqui uma imagem qualquer. “Abre ViagemTableViewCell.xib > Clica na view".
+
+[09:11] Vou abrir o menu lateral direito, em “Image” eu vou colocar “Cancun”, por exemplo. Vou rodar o aplicativo mais uma vez, só para vermos visualmente como está ficando.
+
+[09:26] A imagem não ocupou todo o espaço porque em content mode, nós precisamos alterar para ela preencher todo o espaço disponível.
+
+[09:37] Eu selecionei a imagem, “Content Mode > Aspect Fit”. Nós vamos mudar: "seleciona a imagem na View > Menu lateral direito > Content Mode > Aspect Fill". Vou rodar o aplicativo mais uma vez.
+
+[09:50] E conseguimos visualizar a célula que nós acabamos de criar! Repare que já estamos dando passos largos para conseguirmos deixar o nosso projeto igual ao layout proposto no início do curso.
+
+[10:06] Criamos o header, criamos a célula e ainda tem alguns ajustes que precisamos fazer - como, por exemplo: quando fazemos o scroll, o header não está subindo, não está scrollando junto com a TableView.
+
+[10:22] Precisamos arredondar, colocar a sombra; mas a parte principal, que é o header e a célula customizada, nós já criamos. Eu vou voltar na nossa “Image View” para nenhuma imagem porque daqui a pouco vamos utilizar o mock com várias imagens diferentes. Retirei a imagem que colocamos, eu coloquei apenas para testar.
+
+[10:48] O importante dessa aula foi aprendermos a registrar a célula da TableView, sempre que trabalhamos com uma célula customizada precisamos registrar.
+
+[10:59] Quando registramos a célula, precisamos vir no método cellForRow e utilizar o método dequeueReusableCell para reutilizarmos as células. Por isso é importante colocarmos o identificador para a nossa célula, tanto para registrarmos quanto para reutilizarmos.
+
+[11:18] Depois que utilizamos esse método, nós conseguimos instanciar a célula, mas percebemos que a altura da célula estava diferente da altura que nós desenhamos no interface builder.
+
+[11:32] Por isso, utilizamos o método heightForRow. Basicamente, sempre que você for utilizar células customizadas você vai precisar utilizar esse método heightForRow para indicar para a TableView qual a altura da célula.
+
+[11:46] Feito tudo isso, nos próximos vídeos vamos finalizar esses detalhes que temos com a nossa listagem.
+
+@@04
+Utilizando mock para listar as viagens
+
+[00:00] Agora falta implementarmos a fonte de dados para a nossa tabela, para a nossa TableView. Até agora deixamos nosso numberOfRowsInSectioncom um valor fixo, nós estamos apenas instanciando a célula, mas não estamos exibindo as informações necessárias.
+[00:19] E a partir de agora, nós vamos utilizar um mock que nada mais é do que um JSON que nós vamos colocar no nosso projeto, é a simulação da resposta de uma requisição com o servidor.
+
+[00:32] Como nós não vamos trabalhar aqui com uma requisição, porque não é o foco do curso, nós vamos utilizar um JSON que vai nos fornecer essas informações. O que eu vou fazer? Eu tenho alguns arquivos que eu vou implementar no nosso projeto agora.
+
+[00:49] Esses arquivos também vão estar disponíveis nessa seção para você fazer o download. Nós vamos utilizá-los para ganharmos tempo. Primeiro, o que eu vou fazer? Eu vou criar uma pasta no menu lateral esquerdo, "Botão direito do mouse em AluraViagens > New Group > Mock".
+
+[01:09] Eu vou arrastar essa pasta para baixo dos “Assets”. O primeiro arquivo que eu vou arrastar para dentro dessa pasta é o arquivo “server-response.json”. Eu vou clicar e arrastar o arquivo para dentro da pasta. Solto e clico em "Finish". Aqui nós temos o JSON, que são as viagens.
+
+[01:38] Se analisarmos, temos alguns nós nesse JSON, temos a seção de destaques - que é a primeira seção que nós estamos trabalhando nesse curso, onde temos três viagens.
+
+[01:51] Mais para frente vamos implementar mais funcionalidades no aplicativo. Já temos também outras informações como ofertas e viagens internacionais. Nós temos aqui várias viagens.
+
+[02:06] Vamos continuar arrastando os outros arquivos. Eu vou clicar no arquivo “DecodableData.swift” para dentro da pasta “Model”. Mesmo esquema, clico em "Finish". Eu vou arrastar também o arquivo “TipoDeViagens.swift” para “Model” e clicar em "Finish".
+
+[02:32] E eu vou arrastar também o arquivo “Viagem.swift” para dentro da pasta “Model” e clicar em "Finish".
+
+[02:44] Nós temos três classes, já vamos passar por cada uma delas para vermos o que são; mas antes eu vou criar mais uma pasta e vou arrastar outro arquivo que vai nos auxiliar. "Botão direito do mouse em AluraViagens > New Group > Extensions".
+
+[03:01] E eu vou arrastar a pasta “Extensions” para baixo de “ViewModel”. Eu vou arrastar o arquivo “UIView+Extension” para dentro da pasta “Extensions” e clicar em "Finish".
+
+[03:16] Vamos ver quais foram os arquivos que incluímos no nosso projeto. Primeiro temos uma classe, uma estruct de viagem, onde temos id, titulo, o asset e subtitulo.
+
+[03:29] Enfim, todas as informações da viagem. Isso vai ser útil porque, como vamos fazer o decodable desse JSON, vai ficar mais fácil de convertermos isso em um objeto.
+
+[03:41] Abri o “DecodableData.swift". Aqui temos uma classe que vai nos auxiliar com isso, é a classe “DecodableData.swift”, ele vai ler o JSON e vai fazer a desserialização.
+
+[03:54] Ele está reclamando que falta implementarmos algumas classes, logo vamos fazer isso. Aqui temos também a classe “TiposdeViagem.swift”. Como eu acabei de mostrar, temos alguns tipos que são os destaques, as ofertas e as viagens internacionais.
+
+[04:14] O foco desse curso é trabalharmos com essa primeira etapa, que são as viagens de destaque. Se tentarmos buildar o projeto nesse momento, ele vai apontar erros de compilação porque falta implementarmos alguns arquivos, algumas classes.
+
+[04:33] Olhe só, aqui nós temos a primeira classe, que é a ViagemViewModel, é um ViewModel na verdade, que vamos implementar. Nós vamos começar implementando essa classe.
+
+[04:47] Aqui na pasta de “ViewModel” que nós temos no menu lateral direito, eu vou criar uma nova classe, um novo arquivo do swfit, na verdade: "Botão direito do mouse ViewModel > New File > Swift File > Next". Eu vou dar o nome de "ViagemViewModel”. Vou clicar em "Create".
+
+[05:07] E o que vamos fazer aqui? Vamos começar criando um protocolo que vai se chamar protocolo ViagemViewMode { {.
+
+[05:16] E esse protocolo vai ter algumas características de Viagem, ou seja, tudo que precisamos que uma célula exiba na TableView, nós vamos colocar aqui.
+
+[05:29] O “ViewModel”, na verdade, nada mais é do que um modelo de view, todas as informações que precisamos para visualizar vamos implementar nesse protocolo.
+
+[05:39] Nessa linha de código eu tenho um colchetes a mais. Apaguei colchetes... Agora sim! A primeira coisa que vamos colocar é o título de sessão. Eu vou criar uma variável chamada var tituloSessao { get }.
+
+[06:00] Depois do título da sessão, vamos ter outra variável que vai ser o tipo. Ele está reclamando porque é uma string: var tituloSessao: String { get }.
+
+[06:14] Quais são os tipos que nós temos de viagens possíveis? Nós temos os destaques, as ofertas e as viagens internacionais. Nós temos três tipos. Para fazer isso, eu vou criar um novo menu que vai se chamar enum ViagemViewModelType: String {.
+
+[06:35] E vamos colocar quais são os tipos. O case destaques é o primeiro tipo. Nós temos outro case ofertas e temos também as cases internacionais.
+
+[06:52] E o tipo vai ser esse enum, que nos fornece três opções: var tipo: ViagemViewModeltype. No final eu colo um { get }.
+
+[07:02] Nós temos o título da sessão, o tipo que essa viagem pode ser e agora eu vou criar outra variável, que vai ser de fato a lista de viagens. É uma lista, ou seja, um array de viagem, e eu implemento o get e o set: var viagens: [Viagens] { get set }.
+
+[07:22] E por último, temos uma variável chamada número de linhas. Como a ideia é avançarmos com o projeto e termos mais de uma sessão na tabela, precisamos saber quanta linhas tem cada sessão: var numeroDeLinhas. Essa informação é muito importante, é um Int { get }.
+
+[07:45] Nós temos duas estruturas, o protocolo e um enum. Se tentarmos rodar o projeto, ele ainda vai reclamar porque falta criarmos um “ViewModel” de destaque - que é esse if que ele está tentando utilizar.
+
+[08:05] O que acontece? Ele está tentando ler aquele arquivo do JSON e serializar isso criando um “ViewModel”.
+
+[08:13] Como nós não temos essa classe ViagemDestaqueViewModel, ele está reclamando. A ideia é criarmos ela agora. Dentro da pasta “ViewModel”, eu vou criar um novo arquivo. "Botão dreito do mouse ViewModel > New File > Swift File > Next" e eu vou chamar de "ViagemDestaqueViewModel".
+
+[08:34] Quais são as informações que esse “ViewModel” vai ter? Cliquei em "Create". Vou criar classe a class ViagemDestaqueViewModel { e agora vou implementar aquele protocolo que nós acabamos de criar.
+
+[08:50] Qual é o protocolo? ViagemViewModel. Todo ViewModel vamos partir desse protocolo; ou seja, todos os ViewModels que nós formos criar terão que ter um título, um tipo, uma lista de viagem e um número de linhas.
+
+[09:04] Vamos começar implementando esse protocolo. Como eu implemento? Dois pontos, espaço e o nome do protocolo: class ViagemDestaqueViewModel: ViagemViewModel {.
+
+[09:13] Ele vai orientar para implementarmos todas as informações que nós temos aqui. Vamos começar implementando as suas variáveis que declaramos. Título da sessão vai ser Destaques, vamos digitar: return "Destaques".
+
+[09:37] Qual vai ser o tipo? Vai ser return.destaques, porque nós estamos trabalhando com a sessão de destaques nesse momento. Número de linhas? Vamos implementar aqui a lista de viagens: return viagens.count.
+
+[09:58] E na lista de viagens não vamos colocar nada porque vamos criar um método construtor onde vamos pegar essa viagem. Eu vou criar um método construtor chamado viagens, que é uma lista de Viagem: init(_ viagen: [Viagem]) {.
+
+[10:17] E eu pego a minha lista de viagens, que vai ser igual a lista que eu estou recebendo por parâmetro,self.viagens = viagens.
+
+[10:30] Temos aqui um ViewModel que vai ser responsável por montar a sessão de destaques na nossa lista. Agora eu vou tentar rodar o projeto.
+
+[10:41] Já estamos conseguindo compilar o projeto! O próximo passo é utilizarmos de fato esse ViewModel na utilização da nossa TableView.
+
+[10:55] Aqui onde instanciamos a célula, vamos utilizar um ViewModel, vamos passar esse modelo Viagem para a célula e vamos setar todas as informações que recebemos do nosso mock. São as informações no arquivo server-response.json.
+
+[11:08] Para a nossa célula renderizar na TableView.
+
+@@05
+05
+Baixando os arquivos extras
+
+Para baixar os arquivos extras vistos no vídeo anterior, clique neste link.
+Bons estudos!
+
+https://caelum-online-public.s3.amazonaws.com/2095-ios-layout/05/Arquivos+Swift.zip
+
+@@06
+Criando outlets
+
+[00:00] Com o ViewModel criado, agora nós podemos começar a alterar os métodos de DataSource da TableView.
+[00:07] Nós temos algumas informações fixas - como, por exemplo, o número de linhas. O número de linhas vai depender de qual sessão estamos trabalhando na nossa TableView.
+
+[00:18] Lembrando que nós temos três tipos de destaques ofertas e internacionais. Nesse primeiro momento nós vamos utilizar somente as viagens destaques.
+
+[00:28] E quais são essas viagens destaques? "Abre server-response.json". Nós temos um JSON que nos indica que são as três primeiras. A ideia é listarmos as três primeiras viagens. Precisamos saber em qual sessão nós estamos para indicarmos que é essa lista que vamos utilizar.
+
+[00:48] Vou voltar no “ViewController.swift”. Quando incluímos o arquivo de decodableData, repare que temos uma constante chamada sessaoDeViagens.
+
+[01:00] Que nada mais é do que uma lista de ViewModel, nós podemos ter os três tipos que nós já comentamos. Nós precisamos saber qual é a sessão que nós estamos utilizando e depende da sessão acessamos a lista de viagem correta.
+
+[01:18] Vamos ver na prática como isso funciona. Vamos utilizar essa constante de sessão de viagens, return sessaoDeViagens?. O que vamos fazer? Vamos acessar ela de acordo com a section da TableView acessaremos o número de linhas: [section].numeroDeLinhas.
+
+[01:41] Como esse sessaoDeViagens é opcional, nós temos aqui o ponto de interrogação, que indica que a variável pode ter valor ou não. Aqui não podemos passar uma variável opcional.
+
+[01:56] Podemos facilmente resolver isso através do operador que nós fazemos a verificação. Ele vai verificar se a sessaoDeViagens tem valor, se não tiver o valor é 0: ?? 0. É isso que ele está fazendo no código.
+
+[02:12] Já alteramos o método do número de linhas de acordo com a sessão e agora vamos começar a criar os outlets da view da célula para que consigamos setar os valores.
+
+[02:26] Vamos começar abrindo o XIB, "ViagemTableViewCell.xib". Nós temos a nossa célula, vamos começar criando um outlet dessa view de background: "Background View".
+
+[02:41] Nós temos vários elementos, várias labels na imagem e em alguns vídeos anteriores eu havia falado que vamos utilizar essa view para nos ajudar a dar aquele efeito de sombreamento. Precisamos ter acesso a essa view também. Como eu crio o outlet? Eu clico na opção das barras no canto superior direito.
+
+[03:06] Venho em “Assistant” e ele vai abrir o menu lateral direito. Para a tela não ficar muito bagunçada, eu vou fechar o menu lateral esquerdo através da opção “Hide or show the Navigator” ao lado do círculo verde no canto superior esquerdo.
+
+[03:20] Clico, ele diminui o menu e nós ficamos com a área de visualização maior. Quando criamos uma célula, ele já nos traz alguns métodos por default, por padrão.
+
+[03:33] Nesse caso, não vamos utilizar esses métodos, eu vou até apagar para não poluir a nossa classe. "Seleciona linhas 12 a 21 > Delete". Vou criar um marcador indicando que vamos colocar aqui alguns outlets: //MARK: - IBOutlets.
+
+[03:47] Nós vamos começar a criar esses outlets. Eu seleciono a “BackgroundView”. Estou utilizando o menu lateral esquerdo, seguro a tecla “Ctrl” no teclado e arrasto para dentro da minha classe.
+
+[04:02] O nome desse outlet vai ser "backgroundViewCell > Connect". Nós podemos começar a criar o outlet da imagem. Eu seguro a tecla “Ctrl”, clico na imagem e arrasto para o código. Vou chama de "ViagemImage > Connect".
+
+[04:26] Próximo elemento é o título: "Clica no título > Segura tecla Ctrl > Arrasta para código". O nome, vai se “TituloViagemLabel” e clico em “Connect".
+
+[04:40] Uma observação importante é que vou usar como exemplo a próxima label. Vamos supor que eu queira criar um outlet, seguro a tecla “Ctrl” e arrasto para o meu código. Vou colocar o nome, por exemplo, de “Subtitulo” e vou clicar em “Connect”.
+
+[04:57] De repente, não é o nome que eu queria, penso: "Não quero mais Subtitulo" e vou criar outro outlet. Clico e arrasto de novo para o código. "SubtituloViagem > Connect". Pronto, agora sim, coloquei o nome que eu queria!
+
+[05:12] Nós temos que tomar muito cuidado porque agora tem duas referências do mesmo outlet. Sempre que você colocar um outlet, seja nome incorreto ou você queira apagar, a maneira mais segura de fazer isso é selecionar o elemento no XIB e abrir o menu lateral direito.
+
+[05:34] Aqui temos a última opção, o círculo de “Connect”, onde eu estou passando o cursor do mouse, “Show the Connections Inpector”. Clico nela e ele vai me indicar quais são as conexões que essa label ou esse elemento tem.
+
+[05:49] Eu tenho duas conexões, quando eu quero apagar um outlet, eu clico nesse círculo e clico no “X”. Agora ele não tem mais nenhuma referência. Cuidado na hora de criar o outlet, de repente você não quer mais o outlet, quer trocar o nome ou alguma coisa, essa é a maneira mais segura.
+
+[06:11] Clico no círculo. Veja quais são as conexões e clica no “X” para desamarrar ele daquelas conexões. O ponto negativo é que quando eu faço isso ele continua com o código no nosso projeto.
+
+[06:25] A diferença é que o círculo no início da linha não está preenchido, repare que quando eu crio o outlet ele me indica um círculo preenchido. Quando eu tiro a conexão dele, o círculo fica vazio.
+
+[06:36] Círculo vazio significa que não tem nenhuma conexão, eu posso apagar esse código... Era só para explicar e ter esse cuidado de limpar os outlets da forma correta.
+
+[06:49] Vamos continuar com o nome correto. "Clica no título > Segura tecla Ctrl > Arrasta > subtituloViagemLabel > Connect".
+
+[07:01] A próximo é a diária, clico e arrasto para o código... Acabei de cometer um erro no código! Vamos voltar, eu coloquei a mesma conexão. Eu ia criar um outlet para essa label e acabei arrastando para uma conexão que já tinha. Eu vou ter que limpar. "Abre Show the Connections Inspector > X".
+
+[07:26] Eu volto no meu código e crio de novo a conexão da diária: "Clica > Segura tecla Ctrl > Arrasta > diariaViagemLabel > Connect">
+
+[07:40] Próximo elemento é o preço, o valor da viagem, preço sem desconto. Repare que na view temos duas labels, “A partir de” e o valor da viagem. Só vamos criar o outlet do valor. Eu clico em cima da label do valor da viagem, seguro a tecla “Ctrl” e arrasto para o código - "precoSemDesconto > Connect".
+
+[08:07] Logo abaixo nós temos o valor com desconto, o preço da viagem mesmo. Eu clico na label, seguro a tecla “Ctrl” e arrasto - "precoViagemLabel" > Connect".
+
+[08:25] A label acima, só para mantermos o padrão, está com o nome precoSemDesconto, é precoSemDescontoLabel. Eu vou desfazer. "Abre Show the Connections Inspector > X".
+
+[08:34] Vou apagar a referência na linha 22 e vou alterar o nome dela para precoSemDescontoLabel: "Clica na label > Segura tecla Ctrl > Arrasta > precoSemDescontoLabel > Connect". Nós já temos o outlet do valor.
+
+[08:56] Próxima label, temos em até 12x. Se você receber essa informação do servidor, é importante você criar o outlet e conectar essa informação de acordo com o que vem no JSON.
+
+[09:09] No nosso caso, deixaremos essa label fixa e vamos criar o último outlet, que é o status de cancelamento. "Clica na label > Segura tecla Ctrl > Arrasta > statusDeCancelamentoViagemLabel > Connect".
+
+[09:25] Nós já temos o outlet de todos os elementos que nós vamos utilizar no nosso projeto, aprendemos como limpamos eles e no próximo vídeo vamos continuar coma implementação das informações da viagem para conseguir exibir na nossa TableView todas as viagens que estamos recebendo na sessão de destaques.
+
+@@07
+Configurando célula da TableView
+
+[00:00] Nós acabamos de criar todos os outlets que nós vamos utilizar para setar as informações de viagem na nossa célula, porém ainda não criamos o método para configurarmos todos esses outlets de acordo com as informações que vem do nosso JSON - é isso que faremos agora!
+[00:20] Eu vou criar um método chamado configuraCelula, onde eu vou receber uma viagem opcional por parâmetro: func configuraCelula(_ viagem: Viagem?.
+
+[00:29] E vamos começar a configurar todos os nossos elementos. Vamos começar com a imagem que nós temos na célula, que é esse viagemImage.image = UIImage(. Eu escolho um inicializador onde eu passo o nome, (named: String).
+
+[00:53] O nome da imagem vem de acordo com o que eu receber por parâmetro, vou utilizar viagem?.asset. Esse método não espera um valor opcional, por isso ele está reclamando. Nós podemos fazer a verificação assim: ?? "".
+
+[01:14] Ele vai tentar utilizar esse valor. Se não conseguir, ele vai setar o valor de string vazia. Vamos agora para o próximo, que é o título da viagem: tituloViagemLabel.text = viagem?.titulo.
+
+[01:33] Próximo é o subitutloViagemLabel.text = viagem?.subtitulo. Depois do subtítulo nós temos o preço da viagem: precoViagemLabel.text =. Aqui eu vou fazer o R$ e o valor que estiver no objeto viagem, vai ser "R$ \(viagem.preco)".
+
+[02:16] Um ponto importante é que nós temos que criar aquele efeito de risco no preço e criamos isso através de um complemento que adicionamos na string que chamamos de atributo.
+
+[02:34] Criamos esse efeito na string que se chama strikethrough, esse efeito de risco na label, e adicionamos isso ao texto. Vamos criar isso agora! Ele está reclamando por conta da verificação. Eu vou colocar, ?? 0)".
+
+[02:59] Deixe-me apertar as teclas “Command + B” só para ver se está fazendo o build corretamente. Vamos criar um atributo para a string. Só para você relembrar, vou abrir a célula "ViagemTableViewCell.xib".
+
+[03:11] Temos dois valores na nossa célula: um que é o preço normal e sem desconto; e o outro é o preço fictício que ele vai pagar na viagem. No preço sem desconto vamos dar aquele efeito de risco, como se não valesse mais e vai permanecer somente o valor abaixo.
+
+[03:35] É nesse efeito que vamos trabalhar agora. Abri o “ViagemTableViewCell.swift". Como faremos isso? Eu vou criar um atributo, vou chamar de atributoString, eu vou digitar os dois pontos e ele é do tipo NSMutableAttributedString - let atributoString: NSMutableAttributedString.
+
+[03:52] Eu vou colocar um sinal de igualdade e vou inicializar ele a frente: = NSMutableAttributedString(. Qual é o inicializador que eu vou pegar? Eu vou pegar um onde eu passo somente uma string, o que eu estou passando o cursor do mouse, (string:).
+
+[04:13] Seleciono ele e passo o R$. Eu vou fazer uma interpolação de string, eu vou colocar: (string: "R$ \(viagem.precoSemDesconto). Eu já vou aproveitar para fazer a verificação, se não conseguir setar nenhum preço eu vou deixar o valor ?? 0)").
+
+[04:38] A primeira etapa: precisamos passar para esse método qual texto vamos querer riscar. Nós já passamos, é o R$ e o valor sem desconto que estamos pegando da viagem.
+
+[04:52] Agora sim, vamos continuar implementando esse efeito. O que vamos fazer? Eu vou pegar esse atributoString.addAttribute. Repare que temos dois construtores quase iguais: addAttribute e addAttributes.
+
+[05:10] No segundo passamos mais do que um, o método que vamos pegar é no singular, addAttribute. O que eu vou passar? Vou passar o NSAttributedString.key e o nome do efeito, que é strikthroughStyle: (NSAttributedString.key.strikethroughtSyle,.
+
+[05:37] Essa parte é um pouco trabalhosa mesmo porque nós não temos esse efeito de uma forma fácil. Por exemplo: label e o texto que eu quero setar nessa label .risco; não temos isso.
+
+[05:54] Até poderíamos criar uma extensão e tudo mais, mas aqui eu estou ensinando da forma nativa para você entender como é esse processo. Não decoramos isso porque não é muito usual no dia a dia; mas na hora em que você precisar usar, você vai lembrar de algum lugar que você fez.
+
+[06:13] Em value eu vou passar o valor de 1 e o range vai ser o espaço da própria string, vou passar o atributoString.lenght e value: 1, range: atributoString.lenght).
+
+[06:30] Agora eu vou adicionar esse efeito à minha label. Como eu faço isso? precoSemDescontoLabel.attributedText = atributoString. Aqui só está faltando um fechar parênteses, nós abrimos parênteses no value.
+
+[07:06] Acabamos de setar o atributoString no precoSemDesconto. Precisamos resolver o problema no código porque ele pede o tipo NSRange, não podemos passar o atributoString diretamente. Eu vou abrir o NSMakeRange e eu vou passar 0. Depois eu passo o range: NSMakeRange(0, atributoString.length) ).
+
+[07:37] Acabamos de fazer isso, agora vamos para a label da diária, o número de dias que o usuário vai ficar lá. Eu vou fazer um if para desembrulhar esse valor: if let numeroDeDias = viagem?.diaria,.
+
+[08:02] Eu vou desembrulhar também o número de hóspedes: let numeroDeHospedes = viagem?.hospedes. Eu tenho aqui o meu if let com essas validações. Desembrulhei esses valores.
+
+[08:23] O que eu vou fazer aqui? Como pode ter uma diária, ou mais do que uma, nós temos que fazer aquela verificação para sabermos se colocamos o s ou não. Eu vou criando let diarias = numeroDeDias == 1 ? "Diária". Se for igual a 1 vai ser Diária; senão vai ser : "Diárias".
+
+[08:50] E a mesma coisa com os hóspedes: let hospedes = numeroDeHospedes == 1 ? "Pessoa" : "Pessoas".
+
+[09:10] Essa é a verificação que nós vamos fazer. Agora vamos utilizar os dois textos no outlet. Digitei diariaViagemLabel.text =. Eu vou fazer uma interpolação de string: "\numeroDeDias) \(diaria) - " (numeroDeHospedes) z(hospedes)".
+
+[09:52] Estamos criando uma string customizada com essas validações que acabamos de fazer. É um pouco trabalhosa essa parte de colocarmos o risco na string, as validações; mas na teoria é isso que precisamos fazer.
+
+@@08
+Refatorando a criação da célula
+
+[00:00] Agora precisamos chamar esse método no nosso “ViewController.swift”. No método cellForRow precisamos fazer algumas verificações - como, por exemplo: saber qual é o tipo, se é destaque, se é oferta ou se são viagens internacionais - para passarmos a lista certa de acordo com a sessão que a TableView está tentando acessar.
+[00:25] O que vamos fazer? Eu vou voltar no método cellForRow e vou criar um ViewModel, que é igual à sessão de viagens, de acordo com o indexPath.section: let viewModel = sessaoDeViagens?[indexPath.section].
+
+[00:45] De acordo com a sessão, eu posso ter três tipos: destaques, internacionais ou ofertas. Agora, aqui precisamos fazer uma verificação para sabermos qual é a sessão que vamos acessar.
+
+[01:03] Vou criar um switch: switch: value { > case pattern: > code > default: code > } > return celulaViagem e switch viewModel?.tipo {. Se for destaques: case.destaques: - que é o que vamos trabalhar nesse momento.
+
+[01:13] Vamos pegar essa célula de viagem celulaDeViagem.configuraCelula e passar a viagem. A viagem é o (viewModel?.viagens[indexPath.row]){. Nós vamos retornar a célula de viagem dentro desse case: return: celulaViagem.
+
+[01:39] Se ele não cair no return, vamos retornar um return UITableViewCell(). É isso que vamos fazer. Verificamos qual é o tipo. Se for destaques, vamos passar a lista de destaques e ele vai montar a célula.
+
+[01:59] Um ponto importante quando estávamos implementando os outlets é que tem uma que não está conectada, vamos ver se vai dar problema quando formos fazer o build do projeto. Vou rodar o aplicativo para fazer esse teste e ver se realmente estamos exibindo todas as informações, "Play".
+
+[02:17] É isso mesmo, ele tentou acessar esse subtituloViagemLabel, só que por algum motivo ele perdeu a conexão. É comum isso acontecer, nós temos que ficar ligados e ver porque ele perdeu a conexão.
+
+[02:40] Ele realmente não tem conexão nenhuma, mas vamos resolver isso fácil. Ey vou criar um novo outlet. Abri o menu de outlets e fui em “Assistant". Clico no círculo que está apagado e arrasto para a view. Já conectei, vamos rodar o projeto mais uma vez.
+
+[03:06] Olhe só, que legal! Nós temos aqui três viagens. Eu vou fazer um ajuste na TableView. Reparr que quando fazemos o scroll no nosso aplicativo de modelo que estamos usando, o header faz o scroll junto com as viagens. Aqui no nosso projeto, não!
+
+[03:29] Como resolvemos isso? Vou vir no “Main.storyboard”, selecionar a “Viagens Table View” e vir no menu lateral esquerdo. Eu tenho a opção desse “Style”. Deixe-me dar um zoom aqui, eu venho na opção “Show the Attributes inspector” e em “Style” eu tenho a opção “Grouped”. É isso que eu vou utilizar aqui.
+
+[04:00] O outro ponto que eu queria mostrar é o seguinte: repare que estamos exibindo a célula, mas sem a sombra. Olhe como o efeito da sombra fica legal no modelo, fica um efeito levemente escuro em volta da célula.
+
+[04:15] Não estamos adicionando esse efeito no nosso projeto. A hora em que incluímos essa extension de UIView é justamente para adicionarmos a sombra.
+
+[04:26] Tem um método que vai nos auxiliar a adicionar essa sombra. Abri o “ViagemTableViewCell.swift". Como eu faço para adicionar? Depois que eu fiz toda essa parte de configuração dos outlets. Como eu vou fazer uma atualização de UI, eu vou usar o DispatchQueue.main.async {.
+
+[04:52] Vou atualizar para a thread esse efeito de UI e eu vou pegar o outlet que criamos de backgroundViewCell.addSombra(). É isso que eu vou fazer! Vou rodar o projeto.
+
+[05:12] Aqui, como estamos dentro de uma closure, dentro do Dispatch, precisamos do self: self.backgrounViewCell.addSombra(). Vou rodar o projeto e nós vamos verificar esse efeito de sombra.
+
+[05:27] Olhe só que legal, nós temos aqui o efeito da sombra como nós temos ao lado!
+
+[05:34] E estamos com o projeto quase pronto, falta ainda alguns ajustes, mas estamos conseguindo consumir o JSON que nós aplicamos no nosso projeto e também colocamos os efeitos que nós precisávamos!
+
+@@09
+Mantendo o aspecto da imagem
+
+A célula da nossa TableView contém uma imagem (UIImage) que exibe a foto da viagem. Um dos problemas que enfrentamos foi que nem sempre a imagem fica em uma disposição correta na UIImage, às vezes, ficando menor ou distorcida.
+Como podemos solucionar esse problema?
+
+É necessário fazer o ajuste aplicando a propriedade Aspect Fill na imagem.
+ 
+Alternativa correta! Esta propriedade redimensiona o conteúdo da imagem de acordo com a UIImage, mantendo suas proporções (ou seja, não deixando distorcida).
+Alternativa correta
+É necessário fazer uma verificação para saber qual o tamanho da imagem e depois setar a imagem correspondente.
+ 
+Conseguimos melhorar a disposição das imagens através de alguns ajustes nas propriedades da imagem.
+Alternativa correta
+É necessário usar dois tamanhos de imagens diferentes no projeto, sendo uma para quando o app estiver rodando em iPhone e a outra para iPad.
+
+@@10
+Faça como eu fiz: Células customizadas
+
+Há várias maneiras de criar células customizadas para a TableView. Podemos criar na própria TableView, arrastando um UITableViewCell para dentro da UITableView. O ponto negativo desse caso é o reaproveitamento em outros lugares. Podemos criar um xib em um arquivo separado como fizemos durante a aula ou criar um UITableViewCell programaticamente (via código). Toda vez que criamos uma célula em um arquivo separado, precisamos indicar para a TableView que ela é uma View válida para ser exibida. Fazemos isso registrando a célula que criamos na TableView.
+
+Para registrar uma célula criada a partir de um xib, utilizamos o seguinte método:
+viagensTableView.register(UINib(nibName: "ViagemTableViewCell", bundle: nil), forCellReuseIdentifier: "ViagemTableViewCell")
+
+@@11
+O que aprendemos?
+
+Nesta aula aprendemos:
+Criar uma nova célula
+Criar células customizadas é uma tarefa comum no dia a dia de desenvolvimento de aplicativos. Através dela podemos exibir informações importantes de diferentes segmentos, como viagens, imóveis, carros e produtos em geral.
+
+Registrar uma célula
+Para conseguir utilizar a célula é necessário registrá-la ou o aplicativo vai dar crash. Registrar nada mais é do que fazer com que a TableView conheça a View que criamos da célula para que possa ser exibida.
+
