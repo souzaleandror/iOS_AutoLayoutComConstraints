@@ -1599,6 +1599,8 @@ Criar células customizadas é uma tarefa comum no dia a dia de desenvolvimento 
 Registrar uma célula
 Para conseguir utilizar a célula é necessário registrá-la ou o aplicativo vai dar crash. Registrar nada mais é do que fazer com que a TableView conheça a View que criamos da célula para que possa ser exibida.
 
+#### 28/07/2023
+
 @06-Tamanho de classes (size classes)
 
 @@01
