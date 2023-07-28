@@ -1599,3 +1599,193 @@ Criar células customizadas é uma tarefa comum no dia a dia de desenvolvimento 
 Registrar uma célula
 Para conseguir utilizar a célula é necessário registrá-la ou o aplicativo vai dar crash. Registrar nada mais é do que fazer com que a TableView conheça a View que criamos da célula para que possa ser exibida.
 
+@06-Tamanho de classes (size classes)
+
+@@01
+Projeto da aula anterior
+PRÓXIMA ATIVIDADE
+
+Se você deseja começar o curso a partir desta aula, pode fazer o download do projeto desenvolvido até o momento.
+
+https://github.com/alura-cursos/alura-viagens-constraints/archive/e49733bf819c09f7c5cb7b194506d6af132488de.zip
+
+@@02
+Trabalhando com tamanho de classes
+
+[00:00] Para finalizarmos o nosso treinamento, nós implementamos tudo que precisávamos para a visualização do iPhone. Podemos testar em outros modelos.
+[00:14] Mas ainda não testamos no iPad. A ideia dessa última aula é explorarmos como trabalhamos com classes. Quando eu digo “classe”, é classe de iPhone, classe de iPad... Você vai ver que tem uma nomenclatura um pouco diferente. Vamos ver na prática! Eu vou rodar o projeto do iPad Air, por exemplo.
+
+[00:36] E como você pode ver, ele quebra o layout, o tamanho do header, tamanho da label está bem pequeno para esse tipo de visualização. Não está muito bacana.
+
+[00:50] Vamos começar fazendo algumas modificações. A primeira coisa em que mexeremos vai ser no tamanho do raio que nós estamos aplicando nessa view do header. Vamos começar corrigindo isso.
+
+[01:05] Eu vou abrir "Pasta Header > HomeTableViewHeader.swift". Nós aplicamos o cornerRadius de uma valor grande, de 500. Nós podemos fazer uma verificação, nesse caso, para vermos se estamos trabalhando com iPhone ou com iPad.
+
+[01:24] Como fazemos isso? Utilizamos uma classe chamada UIDevice.current.userInterfaceIdiom. Nós verificamos se estamos trabalhando com o iPhone. Se por acaso for iPhone, vamos manter o valor que já estava de 500: == UIUserInterfaceIdiom.phone ? 500.
+
+[01:53] Se for iPad, utilizamos um valor um pouco menor: : 200. Basicamente, para qualquer alteração que você queira fazer no seu layout via código, você consegue fazer esse tipo de validação. Se é iPhone ou iPad, basta setar alguns valores diferentes. Vamos rodar o projeto para vermos como ele vai ficar.
+
+[02:21] Já melhoramos a visualização do header, já não está quebrando! E agora vamos entrar no assunto principal dessa última aula, que é a respeito das classes de size classes, como nós trabalhamos com isso. Olhe só como a label está pequena.
+
+[02:40] A ideia é aplicarmos determinado estilo, tamanho, cor, fonte para iPhone e outro para iPad. Conseguimos fazer isso facilmente através do XIB ou do interface builder. Você vai ver que é bem interessante.
+
+[02:58] Vou abrir mais uma vez o "HomeTableViewHeader.swift". Só para você ver, eu vou aumentar a largura, para nós simularmos como se estivéssemos trabalhando com o iPad. Primeiro eu vou copiar o valor que está na largura, 414 e vou colocar 700.
+
+[03:23] Deixe-me fechar o menu lateral para ganharmos espaço. Esse valor é como se estivéssemos vendo no iPad. O que vamos fazer? Quando trocamos a visualização do simulador da view, na barra inferior da tela, repare que estamos trabalhando com iPhone 11, ele traz uma sigla “C” e “R”.
+
+[03:48] Já vamos entender melhor o que é isso. Quando eu seleciono um iPad, por exemplo, o iPad Air, ele muda para “R R”. Mudo para iPhone e aparece “C R”. "iPhone 11" e aparece “C R”. "iPhone 8 Plus" e “C R” e assim por diante.
+
+[04:13] O que ele quer dizer com isso? A Apple utiliza uma nomenclatura específica que significa compact regular para iPhone. Para iPad ele usa o “R R” que significa regular regular. O iPhone é “compacto” de largura e regular de altura, o iPad é regular e regular.
+
+[04:42] Através dessas siglas nós conseguimos fazer algumas coisas que vão nos ajudar com o auto layout, com os tamanhos de classes distintas. O que eu quero dizer com isso? Por exemplo: quando eu seleciono a label do título, vamos supor que eu queira aumentar o tamanho dela somente para iPad.
+
+[05:04] Eu consigo fazer isso? Consigo, através do “Size Class”! E como eu faço? Basicamente, em todo lugar que tiver o sinal de adição. Eu consigo fazer algumas customizações de acordo com as classes.
+
+[05:21] Vamos supor que no iPad eu queira mudar a cor da fonte de branco para vermelho. Eu venho no menu lateral direito, clico no sinal de adição e adiciono uma nova variação, regular regular, que é o tamanho de um iPad. Clico em "Add Variation".
+
+[05:36] Eu vou alterar a cor, vou pegar o vermelho... Alterei para vermelho. Se eu mudar para o iPhone... " iPhone 12 mini", ele vai me trazer branco porque o iPhone não é regular regular, ele é compact regular.
+
+[05:54] No compact regular ele continua sendo branco. No regular regular, que é o tamanho de um iPad, ele muda de acordo com a customização que eu fiz. Todo lugar que tiver o sinal de adição, eu consigo aplicar essas variações. Isso é muito legal e facilita bastante a nossa implementação.
+
+[06:15] Eu vou clicar no “X” ao lado da cor vermelha para fechar essa customização que eu fiz. Na verdade, eu quero aumentar a fonte, o que eu vou fazer?
+
+[06:24] Eu vou clicar no sinal de adição ao lado de “Font”. Adiciono uma nova variação, mas tem que tomar um cuidado: nesse caso, eu cliquei no sinal de adição e estou adicionando uma variação para compact regular.
+
+[06:38] Mas não é isso que eu quero. O compact regular é para iPhone, se eu quero adicionar para iPad, eu tenho que vir embaixo, clicar no device que eu quero - no caso, o iPad Air - e aumentar a fonte. “R R > Add Variation". Repare que ele duplicou a linha de fonte.
+
+[07:02] E a que eu tenho que mexer no iPad é a que eu tenho a indicação do “R R”. Clico no “T”. Eu vou aumentar, por exemplo, para 35. Aumentei a fonte, agora eu vou aumentar a fonte também de dentro da header: "Seleciona Header" > + > Regular Regular > Add Variation".
+
+[07:30] Venho no “T”. Eu vou por, por exemplo, o tamanho de 27. A mesma coisa com a label que está abaixo do header. Eu clico no sinal de adição e adiciono uma nova variação, "Add Variation".
+
+[07:46] Clico no “T”, tamanho de12 eu vou por, por exemplo, 17. Clico em "Done". Vamos rodar o projeto para vermos como está. Vou gerar um build aqui para iPad.
+
+[08:08] Uma coisa que podemos aproveitar para melhor é as constraints de topo da label “Aproveite o verão” e da “ofertas exclusivas”, para elas ficarem mais juntas e no centro.
+
+[08:21] Olhe só o que eu vou fazer: vou clicar na label “Aproveite o verão”. Eu vou adicionar uma nova variação para a “Constant”, o tamanho dela é 14. Mas é 14 para o iPhone! Então eu vou clicar no sinal de adição e eu vou adicionar uma nova variação de classe para iPad, para “R R”, "Add Variation".
+
+[08:42] Ao invés de 14, para o iPad, eu vou por 20, por exemplo; ou 25. Na label “ofertas exclusivas” vai ser a mesma coisa. Clico no sinal de adição e adiciono a variação. "Add Variation" e coloco 25 em cima e 25 embaixo. Podemos rodar o projeto!
+
+[09:09] Ficou melhor, ficou maior e mais ajustado! Se você quiser aumentar ou diminuir um pouco, você pode ir mexendo e ir acertando de acordo com a fonte e o tamanho que você ache legal.
+
+[09:23] O importante é entendermos que conseguimos trabalhar com essas classes de iPhone, Compact Regular; e iPad, Regular Regular.
+
+[09:32] Um ponto interessante é que sempre que você adicionar essas variações é bom "buildar" também no iPhone para ver se, por acaso, você não alterou a fonte do iPhone mesmo, iPhone 8 > Play". É comum esquecermos de adicionar e mexer na classe que não devia.
+
+[09:53] Temos um header bacana nos dois. A seguir continuaremos com as alterações na célula. A label ainda está bem pequena, vamos também aplicar esse tamanho de classe nas células. Até já!
+
+@@03
+Finalizando a tela principal do app
+
+[00:00] Para finalizarmos o nosso projeto, agora vamos adicionar algumas variações de fontes na célula da TableView para classes “R R”, ou seja, para iPad.
+[00:13] Vamos começar adicionando uma nova variação. Eu clico em "AÉREO + HOTEL > Menu lateral direito > + (Font)". Temos que tomar cuidado de ter certeza que estamos na visualização de iPad. No caso, aqui não estamos.
+
+[00:39] Como eu sei que não estamos? Porque eu abri o menu e ele está “C R”, o tamanho do iPad é “R R”. Como eu quero adicionar uma variação para o iPad, eu tenho que vir na parte inferior da tela e selecionar o iPad, "iPad Air".
+
+[00:57] Agora sim, clico no elemento, clico no sinal de adição, em "Add Variation" e eu altero o tamanho da fonte, vou colocar tamanho 30, um tamanho bem grande. Aqui provavelmente os elementos, como a label debaixo, “Cancelamento Grátis”, vão ficar fora da área visível.
+
+[01:23] Mas no método onde especificamos para a TableView a altura da célula, nós podemos aumentar a célula naquele momento. Se você preferir, você pode aumentar a célula sem nenhum problema. É só aumentar para, por exemplo, 450 e nós conseguimos visualizar melhor. "Menu lateral direito > Símbolo da régua > 450".
+
+[01:49] Vamos continuar adicionando as variações! Eu selecionei a próxima label, clico no adição da “Font” e certifico que é “R R”. "Gramado - Rota do Chocolate > + > Regular Regular > Add Variation". Próximo tamanho, 25.
+
+[02:04] A mesma coisa com a label abaixo: "3 Diárias - 1 Pessoas > + > Regular Regular > Add Variation > 25". Aqui embaixo o tamanho vai ser 22, eu vou adicionar a variação. "A partir de > + > Regular Regular > Add Variation > 22".
+
+[02:27] A label do preço sem desconto, a mesma coisa: adiciono a variação. "R$1138 > + > Add Variation > 22". Tome cuidado para no calor o momento, na pressa, você não acabar mexendo no tamanho do iPhone.
+
+[02:44] A próxima vamos colocar o tamanho 25. Eu vou adicionar uma nova classe, vou alterar a fonte para 25 "R$ 569 > + > Regular Regular > Add Variation > 25".
+
+[02:56] A fonte ao lado, que é o “Em até 12x”, é um pouco menor. Nós vamos adicionar uma variação de tamanho 20. "Em até 12x > + > Regular Regular > Add Variation > 20".
+
+[03:08] E a label “Cancelamento Grátis”. Está vendo que às vezes é difícil selecionar pela view? O que podemos fazer? Estou clicando e não estou conseguindo selecionar.
+
+[03:22] Por isso é interessante utilizarmos o menu lateral esquerdo, onde selecionamos a label e ele consegue selecionar o elemento exato que estamos tentando buscar na view.
+
+[03:35] Vou adicionar uma nova variação de fonte, o tamanho dela vai ser 17. "Cancelamento Grátis > + > Regular Regular > Add Variation > 17". Já alteramos todos os elementos que nós precisávamos. Vou gerar um build no iPad Air. Vamos ver como está ficando. "iPad Air > Play".
+
+[03:58] Legal, ficou bacana! Mas a label de status não está aparecendo. A ideia é aumentarmos a altura da célula de acordo com a classe, se for “R R”, que é iPad. Aumentamos e se for “C R”, que é o valor que já está lá, continuamos com o mesmo valor.
+
+[04:23] O que eu vou fazer? Vou vir no header, onde já utilizamos essa verificação. "HomeTableViewHeader.swift". Vou copiar abaixo a linha 25 e no "ViewController.swift", no método onde setamos a altura, que é o heightForRow, eu vou utilizar aquela validação. Repare que já está 400 para o iPhone.
+
+[04:47] Se for iPhone, nós deixamos o valor que já estava, que é 400. Se for iPad, 450, por exemplo. "Cola código" > 400 : 450. Vamos rodar o projeto de novo. Vamos aumentar mais um pouco, vamos colocar 500.
+
+[05:18] Ficou um pouco mais para cima, mas já estão aparecendo todos os elementos. "ViewController > 475 > Play", fica um valor OK. Sempre que mexermos nessas alterações colocando essas variações de classe, é interessante utilizarmos também o nosso build como iPhone para vermos se não quebramos nada e não setamos alguma configuração errada.
+
+[05:50] Beleza, está OK! Conseguimos aumentar a célula, a fonte da célula também e o header. Com isso, nós fechamos o conteúdo dessa última aula, que foi o estudo sobre size classes (tamanho de classes), onde nós podemos configurar classes e valores de acordo com o device.
+
+@@04
+Aplicando customização nas constraints
+PRÓXIMA ATIVIDADE
+
+As constraints são muito poderosas quando estamos falando de auto layout. Um exemplo disso é que podemos criar um único layout e adequá-lo para iPhone e iPad. Considere que criamos um layout para iPhone e quando testamos no simulador de um iPad, o tamanho de uma determinada View não ficou muito bom.
+Como podemos alterar o valor de uma constraint somente para a visualização de iPad?
+
+É melhor repensar no layout da tela, pois não é possível adicionar customizações em Constraints. Customizações de tamanho e fonte são aplicados somente em labels.
+ 
+Alternativa correta
+É preciso criar uma customização (size classes) para a Constraint de altura da View. Assim, é possível colocar outro valor quando o app estiver rodando em iPad, mantendo-se o valor atual para os demais.
+ 
+Alternativa correta! Atráves do size classes é possível adicionar um valor específico para iPad (Regular x Regular) e alterar o valor que for necessário.
+Alternativa correta
+É preciso criar uma nova Constraint de altura e configurá-la somente para tamanhos de iPad (Regular x Regular). Dessa forma, mantemos uma Constraint para cada tamanho.
+
+@@05
+Faça como eu fiz: Size classes
+PRÓXIMA ATIVIDADE
+
+Um recurso muito interessante quando estamos desenhando um layout que funcione para vários tamanhos de dispositivos, como iPhone e iPad, é o Size Classes. Basicamente, a Apple nomeia os tamanhos como Compact x Regular para iPhones em Portrait (na vertical) e Regular x Regular para iPads.
+
+Opinião do instrutor
+
+A todos os elementos do storyboard ou xib que tiverem o ícone “+” ao lado podem ser adicionados tamanhos de classes diferentes, como o tamanho de uma fonte. Podemos deixar a fonte em um tamanho para devices Compact x Regular (iPhone) e adicionar um outro tamanho para iPad (Regular x Regular).
+
+@@06
+O que aprendemos?
+PRÓXIMA ATIVIDADE
+
+Nesta aula, aprendemos:
+Size Classes
+Size classes ou tamanho de classes são muito úteis no auto layout por nos permitir configurar variações de tamanho, fonte e outras customizações. Ao realizar essas customizações é importante sempre testar em dispositivos distintos para garantir que o layout não está quebrando e está de acordo com o proposto.
+
+@@07
+Conclusão
+
+[00:00] Chegamos ao final de mais um curso aqui na Alura! Parabéns por chegar até aqui, foi uma caminhada bem interessante, onde nós começamos o projeto do zero e chegamos a esse resultado bem interessante!
+[00:14] A ideia realmente foi mostrar na prática quais são as dificuldades, quais são as oportunidades que você vai ter no mercado e quais são os tipos de implementações que nós utilizamos no dia a dia como pessoa desenvolvedora; para que você se acostume com essas práticas e pratique todas essas técnicas que nós estudamos aqui durante esse curso.
+
+[00:40] Vamos repassar rapidamente os principais tópicos. Começamos criando um novo projeto, nós utilizamos o interface builder, o storyboard. Nós começamos criando uma TableView sem nada, onde nós exibíamos apenas os nomes, o título das viagens.
+
+[01:02] Basicamente, nas primeiras aulas nós passamos trabalhando com o header que nos deu bastante trabalho, mas ficou bem bacana. Nós aprendemos como a TableView utiliza o header, como conseguimos customizar essa view do header, como arredondamos os elementos.
+
+[01:22] E o ponto principal é como utilizamos as cosntraints para prendermos os elementos, para que eles se estiquem ou diminuam de acordo com o dispositivo que o usuário estiver usando.
+
+[01:34] Como você pode ver, nós temos aqui o mesmo header e nós estamos utilizando dois devices completamente diferentes.
+
+[01:43] Depois que nós trabalhamos com o header, nós passamos a implementar a célula da TableView. Nós criamos uma célula customizada onde nós também aprendemos a utilizar alguns elementos como imagem, labels e colocamos alguns efeitos nas labels.
+
+[02:05] Depois de desenhar a célula, nós utilizamos um mock para simularmos a resposta de um servidor, de uma requisição para o servidor em que nós temos um JSON com várias viagens.
+
+[02:17] E aqui temos vários nós nesse JSON, vários subtítulos como destaques, ofertas e viagens internacionais. Nesse primeiro momento nós estamos utilizando essas três primeiras viagens. Nós estamos exibindo elas na nossa lista.
+
+[02:42] Depois disso, nós aprendemos como trabalhamos com tamanho de classes, ou seja, como criamos uma view e como configuramos essa view para que ela entenda quais são as configurações que eu quero utilizar no iPad e quais são as configurações que eu quero utilizar no iPhone.
+
+[03:01] E com isso, eu posso aumentar, diminuir e trocar a cor da fonte. Tem uma infinidade de coisas que conseguimos fazer através do size class. Esse foi o conteúdo que passamos aqui, que vimos durante esse curso.
+
+[03:18] Continue praticando, continue estudando. Eu digo sempre que trabalhar com constraint é a prática, reveja alguma aula que você viu somente uma vez e pratique.
+
+[03:31] Um treino interessante é você baixar um aplicativo que você gosta bastante em uma loja, na Apple Store, e tentar reproduzir o layout desse aplicativo com as técnicas que nós utilizamos aqui.
+
+[03:43] Você vai ver que você vai conseguir compreender de uma forma ampla tudo que utilizamos. É realmente praticando e praticando que vamos conseguir desenvolver essas habilidades com constraint.
+
+[03:58] Eu espero de verdade que você tenha gostado desse curso, ao final dessa aula você vai ser direcionado a página de avaliação. Por favor, deixe o seu feedback e o que você achou do curso. Mais uma vez, obrigado e até o próximo curso!
+
+
+@@
+Por que é necessário incluir a sombra em outra Thread?
+
+A inclusão da sombra em outra thread é necessária para evitar que a interface do usuário fique travada enquanto a sombra está sendo aplicada. Quando uma tarefa demorada é executada na mesma thread em que a interface do usuário está sendo atualizada, isso pode resultar em uma experiência ruim para o usuário, pois a interface pode ficar congelada até que a tarefa seja concluída.
+
+Ao mover a aplicação da sombra para outra thread, você permite que a interface do usuário continue respondendo aos comandos do usuário enquanto a sombra está sendo aplicada em segundo plano. Dessa forma, a experiência do usuário não é afetada e a aplicação continua fluída e responsiva.
+
+Vamos imaginar um exemplo prático: suponha que você esteja desenvolvendo um aplicativo de edição de fotos. Ao aplicar uma sombra em uma imagem, essa tarefa pode levar algum tempo, especialmente se a imagem for grande. Se você realizar essa tarefa na mesma thread em que a interface do usuário está sendo atualizada, a aplicação pode ficar travada até que a sombra seja aplicada. Isso seria frustrante para o usuário, pois ele não conseguiria continuar editando a foto enquanto a sombra está sendo aplicada. No entanto, se você mover a aplicação da sombra para outra thread, o usuário poderá continuar editando a foto normalmente, sem interrupções.
+
+Espero ter ajudado a esclarecer sua dúvida!
+
